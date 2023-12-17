@@ -33,6 +33,7 @@ app.use(authonticate)
 
 
 app.listen(process.env.port, async () => {
+    
     try {
         await connection
         console.log("Connected Succesfully to DataBase")
