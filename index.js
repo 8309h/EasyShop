@@ -7,14 +7,12 @@ const {UserModel} = require("./models/User.models")
 const { authonticate } = require("./middlewares/authonticate.middlewares")
 const cors = require("cors")
 
-
-
 const app = express()
 app.use(express.json())
 app.use(cors())
 
 app.get("/", (req, res) => {
-    res.send("Home-Page of EasyShop")
+    res.send("Home-Page of EasyShop_the shopping hub")
 
 })
 
@@ -27,9 +25,9 @@ app.get("/alluserdata", (req, res) => {
   
 });
 app.use("/users", userRouter)
-
 app.use("/products", productRouter)
 app.use(authonticate)
+
 
 
 
@@ -37,10 +35,10 @@ app.use(authonticate)
 app.listen(process.env.port, async () => {
     try {
         await connection
-        console.log("Connected Succesfully to DB")
+        console.log("Connected Succesfully to DataBase")
 
     } catch (err) {
-        console.log("Not Connected to DB")
+        console.log("Not Connected to DataBase")
     }
     console.log(`Server runs at ${process.env.port}`)
 })
