@@ -80,10 +80,10 @@
                 email: document.getElementById("email").value,
                 password: document.getElementById("password").value,
             };
-            let deployed = "/users/register";
-            let localhosturl = "http://localhost:8080/users/login";
+            let deployed = "https://easyshop.cyclic.app/users/login";
+            // let localhosturl = "http://localhost:8080/users/login";
 
-            fetch(localhosturl, {
+            fetch(deployed, {
                 method: "POST",
                 headers: {
                     "Content-type": "application/json",

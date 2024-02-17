@@ -1,6 +1,9 @@
 const { MongoClient } = require('mongodb');
+require('dotenv').config()
 
-const uri = 'mongodb+srv://harshal:harshalxyz@cluster0.q32myeh.mongodb.net/EasyShopAPI?retryWrites=true&w=majority';
+let uri =  process.env.mongoURL
+
+// const uri = 'mongodb+srv://harshal:harshalxyz@cluster0.q32myeh.mongodb.net/EasyShopAPI?retryWrites=true&w=majority';
 const client = new MongoClient(uri, { useNewUrlParser: true, useUnifiedTopology: true });
 
 async function insertMenCollection() {

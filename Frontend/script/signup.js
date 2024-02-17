@@ -14,15 +14,12 @@ function myfun(event) {
         const password = document.getElementById("password").value;
         const address = document.getElementById("address").value;
 
-        const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+        // const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
        
     
         if (name == "" || email == "" || password == "" || address =="") {
             alert("All fields are required");
            
-        }else if (!emailRegex.test(email)) {
-            alert("Invalid email format");
-            
         }else {
 
             const payload = {
@@ -30,10 +27,10 @@ function myfun(event) {
              };
              console.log("payload",payload);
      
-             let deployed = "/users/register";
-             let localhosturl = "http://localhost:8080/users/register";
+             let deployed = "https://easyshop.cyclic.app/users/register"
+            //  let localhosturl = "http://localhost:8080/users/register";
      
-             fetch(localhosturl, {
+             fetch(deployed, {
                  method: "POST",
                  headers: {
                      "Content-type": "application/json"

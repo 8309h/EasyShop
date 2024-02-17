@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -10,14 +11,15 @@
     <link rel="stylesheet" href="style/index.css">
     <link rel="stylesheet" href="style/product.css">
 </head>
+
 <body>
     <nav>
 
         <div id="black">Download our shop bags mobile app and your membership will extends by three month</div>
         <div id="nav1">
             <div id="logo">
-                <a href="./index.html">  <img src="./images/logo2.png" alt=""></a>
-              
+                <a href="./index.html"> <img src="./images/logo2.png" alt=""></a>
+
 
             </div>
             <div id="links">
@@ -30,40 +32,49 @@
                 <a href="#"><button>COMMUNITY</button></a>
                 <a href="#"><button>SALE</button></a>
                 <a href="./admin.html"><button style="color: white; background-color: black;">ADMIN</button></a>
-            </div> 
-            
+            </div>
+
             <div id="links2">
-                
-                <a href="#"><i class="fa fa-map-marker" aria-hidden="true"></i></a>
+
+                <div class="dropdown">
+                    <button class="dropbtn"><i class="fa fa-user" aria-hidden="true"></i></button>
+                    <div class="dropdown-content">
+                        <a href="#" onclick="login()">Login</a>
+                        <a href="#" onclick="signUp()">Sign Up</a>
+                        <a href="#" onclick="logout()">Logout</a>
+                        <a href="#" onclick="goToProfile()">Go to Profile</a>
+                    </div>
+                </div>
                 <a href="wishlist.html"><i class="fa fa-heart" aria-hidden="true"></i> </a><span id="wishcount"></span>
-                <a href="cart.html"><i class="fa fa-shopping-cart" aria-hidden="true"></i></a><span id="cartcount"></span>
-                <a href="login.html"><i class="fa fa-user" aria-hidden="true"></i> </a>
-
-
+                <a href="cart.html"><i class="fa fa-shopping-cart" aria-hidden="true"></i></a><span
+                    id="cartcount"></span>
             </div>
         </div>
-    </nav>  
+    </nav>
     <div id="main">
         <div id="fix">
-            <p>Search Your Favorite Here </p>
-            <input type="search" oninput="search()" placeholder="What can we help you find?">
-           
-            <p> Aarrange product by their price</p>
-            <select name="sorting" id="sort">
-              <option value="">Sorting</option>
-              <option value="LTH">Lower-higher</option>
-              <option value="HTL">Higher-lower</option>
-            </select>
-           
-          </div>
-          <div id="scroll">
+            <div>
+                <p>Search Your Favorite Here </p>
+                <input type="search" oninput="search()" placeholder="What can we help you find?">
+            </div>
+            <div>
+                <p> Aarrange product by their price</p>
+                <select id="sort" name="sorting">
+                    <option value="">Sorting</option>
+                    <option value="LTH">Lower-higher</option>
+                    <option value="HTL">Higher-lower</option>
+                </select>
+            </div>
+
+        </div>
+        <div id="scroll">
             <div id="container"></div>
-          </div>
-        
+        </div>
+
     </div>
-   
-    
-    <footer>
+
+
+    <footer style="margin-top: 80%;">
         <div id="foot1">
             <div>
                 <h2> CUSTOMER CARE</h2>
@@ -99,16 +110,16 @@
 
             </div>
         </div>
-        
+
         <p style="color: gray; text-align: center; margin: auto;">When you follow our links to visit a brand or
             retailer’s website or make a purchase, ModeSens may earn a commission.</p>
 
         <hr>
         <div id="foot2">
             <div id="footicon">
-             
-                    <img  style="width: 50%;" src="./images/logo2.png" alt="">
-               
+
+                <img style="width: 50%;" src="./images/logo2.png" alt="">
+
                 <p>© 2022 shopBag Inc</p>
             </div>
             <div id="lastlink">
@@ -120,15 +131,38 @@
                 <i class="fa fa-yahoo" aria-hidden="true"></i>
                 <i class="fa fa-google" aria-hidden="true"></i>
                 <i class="fa fa-snapchat" aria-hidden="true"></i>
-                
+
             </div>
         </div>
-       
-       
+
+
 
 
     </footer>
-    
+
 </body>
+
 </html>
 <script src="./script/mensproduct.js"></script>
+<script>
+    function login() {
+        alert("Login clicked");
+        window.location.href = "login.html"
+
+    }
+
+    function signUp() {
+        alert("Sign Up clicked");
+        window.location.href = "signup.html"
+    }
+
+    function logout() {
+        alert("Logout clicked");
+
+    }
+
+    function goToProfile() {
+        alert("Go to Profile clicked");
+        // Add your go to profile logic here
+    }
+</script>

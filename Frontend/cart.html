@@ -27,16 +27,23 @@
               <a href="./product.html"><button>DESIGNERS</button></a>
               <a href="./product.html"><button>COMMUNITY</button></a>
               <a href="./product.html"><button>SALE</button></a>
+
           </div> 
             
           <div id="links2">
-           
-            <a href="#"><i class="fa fa-map-marker" aria-hidden="true"></i></a>
+
+            <div class="dropdown">
+                <button class="dropbtn"><i class="fa fa-user" aria-hidden="true"></i></button>
+                <div class="dropdown-content">
+                    <a href="#" onclick="login()">Login</a>
+                    <a href="#" onclick="signUp()">Sign Up</a>
+                    <a href="#" onclick="logout()">Logout</a>
+                    <a href="#" onclick="goToProfile()">Go to Profile</a>
+                </div>
+            </div>
             <a href="wishlist.html"><i class="fa fa-heart" aria-hidden="true"></i> </a><span id="wishcount"></span>
-            <a href="cart.html"><i class="fa fa-shopping-cart" aria-hidden="true"></i></a><span id="cartcount"></span>
-            <a href="login.html"><i class="fa fa-user" aria-hidden="true"></i> </a>
-
-
+            <a href="cart.html"><i class="fa fa-shopping-cart" aria-hidden="true"></i></a><span
+                id="cartcount"></span>
         </div>
              
         </div>
@@ -54,11 +61,11 @@
           </div>
          
     
-          <a href="payment.html"><button>Buy Now</button></a>
+          <a href="#"><button id="buyNowButton">Buy Now</button></a>
           <div id="offer">
             <!-- <p>Use the coupen code Harsh30 and get the discount upto 30% off </p> -->
-            <p>USE(HM-dec) => 30% off</p>
-            <p>USE(HM-decor) => 50% off</p>
+            <p>USE(HM-dec) => 10% off</p>
+            <!-- <p>USE(HM-decor) => 50% off</p> -->
             <p id="smile" style="font-size: 60px;">🛒</p>
           </div>
         </div>

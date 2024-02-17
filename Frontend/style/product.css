@@ -1,29 +1,33 @@
 #main{
     
-    display: flex;
-    width: 90%;
+    /* display: flex; */
+    /* width: 90%; */
     margin: auto;
     gap: 5%;
    
 }
 #fix {
-    width: 25%;
+    width: 100%;
     position: fixed;
+    background-color: rgb(236, 239, 239);
     z-index: 1;
-    top: 17%;
-    padding: 2%;
+    top: 5%;
+    display: flex;
+    justify-content: space-evenly;
     
 }
 #scroll{
     height: auto;
-    width: 70%;
-    margin-left: 40%;
-    margin-bottom: 100%;
+    width: 100%;
+    height: 100vh;
+    margin-bottom: 20%;
+    margin-top: 50px;
+    
     
 }
 #container{
     display: grid;
-    grid-template-columns: repeat(2,1fr);
+    grid-template-columns: repeat(4,1fr);
     grid-template-rows: auto;
     gap: 10px;
 }
@@ -33,7 +37,8 @@
     gap: 7%;
     padding: 1%;
     /* box-shadow: rgba(7, 7, 7, 0.35) 0px 5px 15px; */
-    border: 1px solid gray;
+    /* border: 1px solid gray; */
+    box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
    
 
 }

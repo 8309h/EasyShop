@@ -1,5 +1,8 @@
 const express =  require("express")
 const {UserModel} = require("../models/User.models")
+const {BlacklistTokenModel} =  require("../models/Blacklist.models")
+
+
 const jwt = require("jsonwebtoken")
 const bcrypt = require("bcrypt")
 
@@ -111,6 +114,7 @@ userRouter.put("/updateprofile", async (req, res) => {
   
   
   userRouter.post("/logout", async (req, res) => {
+
     const { token } = req.body;
   
     try {

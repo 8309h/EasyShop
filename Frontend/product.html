@@ -55,17 +55,21 @@
     </nav>  
     <div id="main">
         <div id="fix">
-            <p>Search Your Favorite Here </p>
-            <input type="search" oninput="search()" placeholder="What can we help you find?">
+            <div> <p>Search Your Favorite Here </p>
+                <input type="search" oninput="search()" placeholder="What can we help you find?">
+               </div>
+             <div>
+                <p> Aarrange product by their price</p>
+                <select  id="sort" name="sorting" >
+                  <option value="">Sorting</option>
+                  <option value="LTH">Lower-higher</option>
+                  <option value="HTL">Higher-lower</option>
+                </select>
+             </div>
            
-            <p> Aarrange product by their price</p>
-            <select name="sorting" id="sort">
-              <option value="">Sorting</option>
-              <option value="LTH">Lower-higher</option>
-              <option value="HTL">Higher-lower</option>
-            </select>
            
           </div>
+          
           <div id="scroll">
             <div id="container"></div>
           </div>
@@ -142,3 +146,25 @@
 </body>
 </html>
 <script src="./script/products.js"></script>
+<script>
+    function login() {
+        alert("Login clicked");
+        window.location.href = "login.html"
+
+    }
+
+    function signUp() {
+        alert("Sign Up clicked");
+        window.location.href = "signup.html"
+    }
+
+    function logout() {
+        alert("Logout clicked");
+
+    }
+
+    function goToProfile() {
+        alert("Go to Profile clicked");
+        // Add your go to profile logic here
+    }
+</script>

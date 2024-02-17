@@ -56,7 +56,7 @@ document.querySelector("#resendotp").addEventListener("click", function (e) {
 
     }
     console.log(payload)
-    fetch("https://sore-bear-pocketbook.cyclic.app/products/create", {
+    fetch("https://easyshop.cyclic.app/products/create", {
             method: "POST",
             headers: {
                 "Content-type": "application/json",

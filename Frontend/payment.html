@@ -41,12 +41,13 @@
             </div>
         </div>
     </nav>  
-    <form>
-        Name of Person:<input type="text" id="name" placeholder="Name" />
-        Card Number:<input type="number" id="cardNo" placeholder="Card Number" />
-        CVV Number:<input type="number" id="cardCvv" placeholder="CVV Number"/>
+    <form id="paymentForm">
+        Name of Person: <input type="text" id="name" placeholder="Name" required />
+        Card Number: <input type="text" id="cardNo" placeholder="Card Number" maxlength="16" required />
+        CVV Number: <input type="text" id="cardCvv" placeholder="CVV Number" maxlength="3" required />
         <input type="submit" value="Confirm" />
-      </form>
+    </form>
+    
     
 </body>
 </html>

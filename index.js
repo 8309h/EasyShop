@@ -3,7 +3,7 @@ require('dotenv').config()
 const { connection } = require("./config/db")
 const { userRouter } = require("./routes/User.routes")
 const { productRouter } = require("./routes/Products.routes")
-const {UserModel} = require("./models/User.models")
+const { UserModel } = require("./models/User.models")
 const { authonticate } = require("./middlewares/authonticate.middlewares")
 const cors = require("cors")
 
@@ -15,25 +15,21 @@ app.get("/", (req, res) => {
     res.send("Home-Page of EasyShop_the shopping hub")
 
 })
-
 app.get("/alluserdata", (req, res) => {
 
     const users = UserModel.find();
-    res.send("heloo");
+    res.send(users)
 
-  //   res.status(500).send({ "msg": "Cannot get the User", "error": err.message });
-  
+    //   res.status(500).send({ "msg": "Cannot get the User", "error": err.message });
+
 });
 app.use("/users", userRouter)
-app.use("/products", productRouter)
-app.use(authonticate)
 
-
-
+app.use("/products",authonticate, productRouter)
 
 
 app.listen(process.env.port, async () => {
-    
+
     try {
         await connection
         console.log("Connected Succesfully to DataBase")
