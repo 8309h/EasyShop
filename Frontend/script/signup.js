@@ -14,7 +14,6 @@ function myfun(event) {
         const password = document.getElementById("password").value;
         const address = document.getElementById("address").value;
 
-        // const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
        
     
         if (name == "" || email == "" || password == "" || address =="") {
@@ -26,8 +25,7 @@ function myfun(event) {
                 name,email,password,address
              };
              console.log("payload",payload);
-     
-             let deployed = "https://easyshop.cyclic.app/users/register"
+            let deployed = "https://easyshop.cyclic.app/users/register"
             //  let localhosturl = "http://localhost:8080/users/register";
      
              fetch(deployed, {
