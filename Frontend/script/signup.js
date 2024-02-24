@@ -1,66 +1,51 @@
 document.getElementById("hide").addEventListener("click", function () {
-    let cont = document.getElementById("container")
+    let cont = document.getElementById("container");
     cont.style.display = "none";
-})
+});
 
 let form = document.getElementById('signupForm');
 form.addEventListener('submit', myfun);
+
 function myfun(event) {
-
     event.preventDefault();
-        
-        const name = document.getElementById("name").value;
-        const email = document.getElementById("email").value;
-        const password = document.getElementById("password").value;
-        const address = document.getElementById("address").value;
 
-       
-    
-        if (name == "" || email == "" || password == "" || address =="") {
-            alert("All fields are required");
-           
-        }else {
+    const name = document.getElementById("name").value;
+    const email = document.getElementById("email").value;
+    const password = document.getElementById("password").value;
+    const address = document.getElementById("address").value;
 
-            const payload = {
-                name,email,password,address
-             };
-             console.log("payload",payload);
-            let deployed = "https://easyshop.cyclic.app/users/register"
-            //  let localhosturl = "http://localhost:8080/users/register";
-     
-             fetch(deployed, {
-                 method: "POST",
-                 headers: {
-                     "Content-type": "application/json"
-                 },
-                 body: JSON.stringify(payload)
-             })
-                 .then((res) => res.json())
-                 .then((data) => {
-     
-                     console.log("data",data.msg); 
-     
-                     if(data.msg == "User already exist please login") {
-     
-                         alert(data.msg)
-                        
-                     }else if(data.msg = "New User register") {
-                         alert("SignUp Success")
-                         location.href = "login.html";
-                         // After successful signup
-                         localStorage.setItem('hasSignedUp', true);
-                         // Close the modal
-                         document.getElementById('signupModal').style.display = 'none';
-                         
-                     }
-                    
-                 })
-                 .catch((err) => {
-                     console.log(err);
-                 });
+    if (name === "" || email === "" || password === "" || address === "") {
+        alert("All fields are required");
+    } else {
+        let payload = { name, email, password, address };
+        let deployed = "https://easyshop.cyclic.app/users/register";
 
-        }
-    
+        fetch(deployed, {
+            method: "POST",
+            headers: {
+                "Content-type": "application/json"
+            },
+            body: JSON.stringify(payload)
+        })
+        .then(res => res.json())
+        .then(data => {
+            console.log("data", data.msg);
+
+            if (data.msg === "User already exist please login") {
+                alert(data.msg);
+            } else if (data.msg === "New User register") {
+                alert("SignUp Success");
+                location.href = "login.html";
+                // After successful signup
+                localStorage.setItem('hasSignedUp', true);
+                // Close the modal
+                document.getElementById('signupModal').style.display = 'none';
+            }
+        })
+        .catch(err => {
+            console.log(err);
+        });
+    }
 }
 
 function togglePasswordVisibility() {

@@ -6,10 +6,13 @@ const { productRouter } = require("./routes/Products.routes")
 const { UserModel } = require("./models/User.models")
 const { authonticate } = require("./middlewares/authonticate.middlewares")
 const cors = require("cors")
+const bodyParser =  require('body-parser')
 
 const app = express()
 app.use(express.json())
 app.use(cors())
+app.use(bodyParser.json())
+app.use(bodyParser.urlencoded({ extended: true }));
 
 app.get("/", (req, res) => {
     res.send("Home-Page of EasyShop_the shopping hub")
@@ -23,7 +26,7 @@ app.get("/alluserdata", (req, res) => {
     //   res.status(500).send({ "msg": "Cannot get the User", "error": err.message });
 
 });
-app.use("/users", userRouter)
+app.use("/users",userRouter)
 
 app.use("/products",authonticate, productRouter)
 
