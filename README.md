@@ -1,4 +1,5 @@
 # EasyShop
+
 # Project Documentation
 
 ## Project Overview
@@ -137,6 +138,6 @@ Endpoint: `DELETE /delete/:id`
   - Success: `{ "msg": "Product deleted successfully", "product": { /* Deleted product details */ } }`
   - Failure: `{ "msg": "Invalid category" }`, `{ "msg": "Product not found" }`, or `{ "msg": "Error deleting product" }`
 
-## Conclusion
 
-This documentation provides a comprehensive guide to the functionality and usage of the provided API. Developers can refer to this document for implementing, testing, and maintaining the different features of the application.
+
+

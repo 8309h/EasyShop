@@ -6,12 +6,13 @@ let displaywishcount = document.getElementById("wishcount");
 
 let productArr = [];
 
-let deployedurl = "https://sore-bear-pocketbook.cyclic.app/products/";
-let localhostUrl = "http://localhost:8080/products/allwomenproducts";
+// let localhostUrl = "http://localhost:8080/products/allwomenproducts";
+let deployedurl = "https://easyshop.cyclic.app/products/allwomenproducts"
+
 
 async function getdata() {
     try {
-        let res = await fetch(localhostUrl);
+        let res = await fetch(deployedurl);
         let data = await res.json();
         console.log("datafrom server",data)
         if (data && Array.isArray(data)) {
@@ -104,36 +105,42 @@ function isProductInWishlist(product) {
 
 function search() {
     let query = document.querySelector("input").value.trim().toLowerCase();
+    console.log(query)
     let newData = productArr.filter(el => el.Title.toLowerCase().includes(query));
     displayData(newData);
 }
 
-let filter = document.querySelector("#filter");
 
-filter.addEventListener("change", function (event) {
-    event.preventDefault();
-    let selectedCategory = event.target.value;
-
-    if (selectedCategory === "all") {
-        displayData(productArr);
-    } else {
-        let filteredData = productArr.filter(el => el.Catogory === selectedCategory);
-        displayData(filteredData);
-    }
-});
 
 let sort = document.querySelector("#sort");
 
 sort.addEventListener("change", function (event) {
-    let sortBy = event.target.value;
+    event.preventDefault();
+    console.log("sort clicked")
+    let sortSelect = event.target.value;
 
-    if (sortBy === "LTH") {
-        let data1 = productArr.slice().sort((a, b) => a.Price - b.Price);
-        displayData(data1);
-    } else if (sortBy === "HTL") {
-        let sortedData = productArr.slice().sort((a, b) => b.Price - a.Price);
-        displayData(sortedData);
-    } else {
-        displayData(productArr);
-    }
-});
+    console.log("heloo from sorts",sortSelect)
+
+    if(sortSelect == ""){
+        alert("Please select the order")
+    }else {
+
+        if (sortSelect === "LTH") {
+            // Sort products from Lower to Higher Price
+            productArr.sort((a,b) => a.Price - b.Price);
+            // displayData(sorteddata1)
+        } else if (sortSelect === "HTL") {
+            // Sort products from Higher to Lower Price
+            productArr.sort((a,b) => b.Price - a.Price);
+            // displayData(sort2)
+        }
+            displayData(productArr);
+        
+        }
+    });
+
+displayData(productArr)
+
+
+
+

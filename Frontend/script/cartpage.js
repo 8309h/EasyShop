@@ -1,10 +1,12 @@
 
 let displaycartcount = document.getElementById("cartcount");
-let  cartitem  = JSON.parse(localStorage.getItem("shopcartdata")) || [];
+let cartitem = JSON.parse(localStorage.getItem("shopcartdata")) || [];
+
+let OfferApplied = false;
 
 
 displaycard(cartitem);
-console.log(cartitem)
+// console.log(cartitem)
 
 function displaycard(out) {
 
@@ -18,7 +20,7 @@ function displaycard(out) {
     out.forEach(function (el, i) {
 
         let div = document.createElement("div")
-         
+
         let div1 = document.createElement("div")
 
         let image = document.createElement("img")
@@ -30,13 +32,13 @@ function displaycard(out) {
         title.textContent = el.Title;
 
         let desc = document.createElement("p")
-        desc.textContent =  el.Description
+        desc.textContent = el.Description
 
         let category = document.createElement("p")
         category.textContent = el.Catogory
 
         let price = document.createElement("p")
-        price.textContent = "₹ " +el.Price
+        price.textContent = "₹ " + el.Price
 
         let btn1 = document.createElement("button");
         btn1.textContent = "+";
@@ -53,8 +55,10 @@ function displaycard(out) {
 
         let btn2 = document.createElement("button");
         btn2.textContent = "-";
+
         btn2.addEventListener("click", function () {
             if (count <= 1) {
+                
                 let cartdata = JSON.parse(localStorage.getItem("shopcartdata")) || [];
                 cartdata.splice(i, 1);
                 localStorage.setItem("shopcartdata", JSON.stringify(cartdata));
@@ -79,12 +83,10 @@ function displaycard(out) {
             displaycard(cartdata);
         })
         total = total + Number(el.Price);
-
-
         totalprice.textContent = total;
         div1.append(image)
-        div2.append(title,desc,category,price,btn1, qtn, btn2, btn3)
-        div.append(div1,div2)
+        div2.append(title, desc, category, price, btn1, qtn, btn2, btn3)
+        div.append(div1, div2)
         document.querySelector("#cart-container").append(div);
 
     })
@@ -97,27 +99,30 @@ function displaycard(out) {
         let val = document.querySelector("#cupon-filled").value;
         // console.log(val)
         if (val === "HM-dec") {
-            totalprice.textContent = Math.floor(total - (total * 0.3));
+            totalprice.textContent = Math.floor(total - (total * 0.1));
+            OfferApplied = true;
+            alert("Offer Applied Successfully")
             // console.log(totalprice)
             localStorage.setItem("disprice", totalprice.textContent)
-
-
-        } else if(val === "HM-decor"){
-            totalprice.textContent = Math.floor(total - (total * 0.5));
-            // console.log(totalprice)
-            localStorage.setItem("disprice", totalprice.textContent)
-
-
+            dis.reset()
         }
         else {
             alert("You Enter The Wrong Coupen Code")
         }
-
-
     })
 
 
+    let gotopayment = document.querySelector("#buyNowButton");
+    gotopayment.addEventListener("click", (event) => {
+        event.preventDefault();
+        console.log("Buy button clicked")
 
+        if (OfferApplied) {
+            window.location.href = "payment.html"
+        } else {
+            alert("Please apply the offer before preceding to the payment")
+        }
+    })
 }
 
 
