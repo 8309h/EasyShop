@@ -45,17 +45,19 @@
             <button id="hide" style="text-align: end; font-size:25px;">X</button>
             <form id="loginForm">
                 <h1>Log in to your account</h1><br>
-                <label>E-mail</label><br>
-                <input id="email" type="email" placeholder="Enter your email" required
-                    pattern="[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$"><br>
-                <label for="pwd">Password</label><br>
+                <label for="email">E-mail</label><br>
+                <input id="email" type="email" placeholder="Enter your email" required><br>
+                <label for="password">Password</label><br>
                 <div style="position: relative;">
-                    <input type="password" id="password" name="pwd" minlength="4" placeholder="Enter password" required>
-                    <span id="eye" style="position: absolute; top: 50%; right: 10px; transform: translateY(-50%); cursor: pointer;"
+                    <input type="password" id="password" name="password" minlength="4" placeholder="Enter password"
+                        required>
+                    <span id="eye"
+                        style="position: absolute; top: 50%; right: 10px; transform: translateY(-50%); cursor: pointer;"
                         onclick="togglePasswordVisibility()">👁️</span>
                 </div>
                 <input type="submit" value="Submit">
-                <h3>Do not have an account? <a style="text-decoration:none; color: black;" href="signup.html">Sign-up</a></h3>
+                <h3>Do not have an account? <a style="text-decoration:none; color: black;"
+                        href="signup.html">Sign-up</a></h3>
             </form>
         </div>
     </div>
@@ -64,7 +66,7 @@
 </html>
 <script>
 
-    document.getElementById("hide").addEventListener("click",function() {
+    document.getElementById("hide").addEventListener("click", function () {
         let cont = document.getElementById("container");
         cont.style.display = "none";
     });
@@ -75,58 +77,51 @@
     function myfun(event) {
         event.preventDefault();
 
-        if (validateForm()) {
-            const payload = {
-                email: document.getElementById("email").value,
-                password: document.getElementById("password").value,
-            };
-            let deployed = "https://easyshop.cyclic.app/users/login";
-            // let localhosturl = "http://localhost:8080/users/login";
-
-            fetch(deployed, {
-                method: "POST",
-                headers: {
-                    "Content-type": "application/json",
-                },
-                body: JSON.stringify(payload),
-            })
-                .then((res) => res.json())
-                .then((res) => {
-                    // console.log("res",res.msg);
-
-                    if(res.msg == "Login sucess") {
-                        localStorage.setItem("token", res.token);
-                        alert("Login Sucessful")
-                        location.href = "index.html";
-
-                    }else {
-                        alert(res.msg)
-                    }
-                    
-                })
-                .catch((err) => {
-                    console.log(err);
-                });
-        }
-    }
-
-    function validateForm() {
-        const email = document.getElementById("email").value;
-        const password = document.getElementById("password").value;
+        let email = document.getElementById("email").value
+        let password = document.getElementById("password").value
 
         if (email === "" || password === "") {
             alert("All fields are required");
-            return false;
+            return true;
         }
 
-        // Validate email using regex
-        const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
-        if (!emailRegex.test(email)) {
-            alert("Invalid email format");
-            return false;
-        }
+        const payload = { email, password }
+        console.log("payload", payload)
 
-        return true;
+        let deployed = "https://drab-plum-quail-belt.cyclic.app/users/login";
+        // let localhosturl = "http://localhost:8080/users/login";
+
+        fetch(deployed, {
+            method: "POST",
+            headers: {
+                "Content-type": "application/json",
+            },
+            body: JSON.stringify(payload),
+        })
+            .then((res) => res.json())
+            .then((res) => {
+
+                console.log("userback", res.user)
+
+                if (res.msg == "Login successful") {
+                    localStorage.setItem("token", res.token);
+                    localStorage.setItem('hasSignedUp', true);
+                    const userObject = res.user;
+
+                    const userJSON = JSON.stringify(userObject);
+
+                    localStorage.setItem('login_user', userJSON);
+                    alert("Login Successful")
+                    location.href = "index.html";
+
+                } else {
+                    alert(res.msg)
+                }
+
+            })
+            .catch((err) => {
+                console.log(err);
+            });
     }
 
     function togglePasswordVisibility() {

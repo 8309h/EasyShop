@@ -18,7 +18,7 @@ function myfun(event) {
         alert("All fields are required");
     } else {
         let payload = { name, email, password, address };
-        let deployed = "https://easyshop.cyclic.app/users/register";
+        let deployed = "https://drab-plum-quail-belt.cyclic.app/users/register";
 
         fetch(deployed, {
             method: "POST",
@@ -31,13 +31,14 @@ function myfun(event) {
         .then(data => {
             console.log("data", data.msg);
 
-            if (data.msg === "User already exist please login") {
+            if (data.msg === "User already exists. Please login") {
                 alert(data.msg);
-            } else if (data.msg === "New User register") {
+                location.href = "login.html";
+            } else if (data.msg === "New user registered successfully") {
                 alert("SignUp Success");
                 location.href = "login.html";
                 // After successful signup
-                localStorage.setItem('hasSignedUp', true);
+                // localStorage.setItem('hasSignedUp', true);
                 // Close the modal
                 document.getElementById('signupModal').style.display = 'none';
             }

@@ -56,7 +56,7 @@ document.querySelector("#resendotp").addEventListener("click", function (e) {
 
     }
     console.log(payload)
-    fetch("https://easyshop.cyclic.app/products/create", {
+    fetch("https://jittery-ruby-salmon.cyclic.app/products/create", {
             method: "POST",
             headers: {
                 "Content-type": "application/json",

@@ -1,6 +1,8 @@
 const express = require("express");
 const { UserModel } = require("../models/User.models");
 const { BlacklistTokenModel } = require("../models/Blacklist.models");
+const { authonticate } = require("../middlewares/authonticate.middlewares")
+
 
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcrypt");
@@ -25,6 +27,7 @@ userRouter.post("/register", async (req, res) => {
 });
 
 userRouter.post("/login", async (req, res) => {
+    
     const { email, password } = req.body;
     try {
         const user = await UserModel.findOne({ email });
@@ -36,28 +39,37 @@ userRouter.post("/login", async (req, res) => {
             return res.status(401).json({ "msg": "Incorrect password" });
         }
         const token = jwt.sign({ userID: user._id }, 'masai', { expiresIn: '1h' });
-        res.json({ "msg": "Login successful", "token": token });
+        const refreshtoken = jwt.sign({ userID: user._id }, 'refreshmasai', { expiresIn: '7h' });
+        res.json({ "msg": "Login successful", "token": token,"refreshtoken":refreshtoken,"user":user});
     } catch (err) {
         console.error(err);
         res.status(500).json({ "msg": "Something went wrong" });
     }
 });
 
-userRouter.put("/updateprofile", async (req, res) => {
-    const { userID, name, email, password, address } = req.body;
+userRouter.patch("/updateprofile", authonticate, async (req, res) => {
+    const { userID,name, email, password,address } = req.body;
     try {
-        const user = await UserModel.findById(userID);
-        if (!user) {
+        // Find and update the user by their ID
+        const updatedUser = await UserModel.findById(userID);
+
+        if (!updatedUser) {
             return res.status(404).json({ "msg": "User not found" });
         }
+
+        // If a new password is provided, hash it and update the user's password
         if (password) {
             const hashedPassword = await bcrypt.hash(password, 10);
-            user.password = hashedPassword;
+            updatedUser.password = hashedPassword;
         }
-        user.name = name || user.name;
-        user.email = email || user.email;
-        user.address = address || user.address;
-        await user.save();
+
+        // Update the user's name, email, and address
+        updatedUser.name = name || updatedUser.name;
+        updatedUser.email = email || updatedUser.email;
+        updatedUser.address = address || updatedUser.address;
+
+        await updatedUser.save(); // Save the updated user
+
         res.json({ "msg": "User profile updated successfully" });
     } catch (err) {
         console.error(err);
@@ -74,7 +86,7 @@ userRouter.post("/refresh-token", async (req, res) => {
 userRouter.post("/logout", async (req, res) => {
     const { token } = req.body;
     try {
-        const isTokenBlacklisted = await BlacklistTokenModel.exists({ token });
+        const isTokenBlacklisted = await BlacklistTokenModel.findOne({ token });
         if (isTokenBlacklisted) {
             return res.status(401).json({ "msg": "Token is already blacklisted" });
         }

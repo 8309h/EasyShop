@@ -4,7 +4,6 @@ const { connection } = require("./config/db")
 const { userRouter } = require("./routes/User.routes")
 const { productRouter } = require("./routes/Products.routes")
 const { UserModel } = require("./models/User.models")
-const { authonticate } = require("./middlewares/authonticate.middlewares")
 const cors = require("cors")
 const bodyParser =  require('body-parser')
 
@@ -28,12 +27,7 @@ app.get("/alluserdata", (req, res) => {
 });
 app.use("/users",userRouter)
 
-
-
-app.use("/products",productRouter)
-
-
-app.use(authonticate)
+app.use("/products",productRouter);
 app.listen(process.env.port, async () => {
 
     try {
