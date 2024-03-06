@@ -138,15 +138,18 @@ Endpoint: `DELETE /delete/:id`
   - Success: `{ "msg": "Product deleted successfully", "product": { /* Deleted product details */ } }`
   - Failure: `{ "msg": "Invalid category" }`, `{ "msg": "Product not found" }`, or `{ "msg": "Error deleting product" }`
 
+  ## Screenshots
 
-  ## Screen Shots
-  [Index Screenshot](./Frontend/images/sc/screencapture-theeasyshop-netlify-app-index-html-2024-03-02-20_48_24.png)
-  [Womens Product Screenshot](./Frontend/images/sc/screencapture-theeasyshop-netlify-app-product-2024-03-02-20_50_03.png)
-  [Mens Product Screenshot](./Frontend/images/sc/screencapture-theeasyshop-netlify-app-mensproduct-2024-03-02-20_52_02.png)
-  [Cart Page Screenshot](./Frontend/images/sc/screencapture-theeasyshop-netlify-app-cart-2024-03-02-20_54_56.png)
- [OTP Page Screenshot](./Frontend/images/sc/screencapture-127-0-0-1-5501-Frontend-otp-html-2024-03-06-23_59_21.png)
-[Recipte  Screenshot](./Frontend/images//sc/screencapture-127-0-0-1-5501-Frontend-otp-html-2024-03-06-23_59_54.png)
+- [Index Page](./Frontend/images/sc/screencapture-theeasyshop-netlify-app-index-html-2024-03-02-20_48_24.png)
+- [Women's Product Page](./Frontend/images/sc/screencapture-theeasyshop-netlify-app-product-2024-03-02-20_50_03.png)
+- [Men's Product Page](./Frontend/images/sc/screencapture-theeasyshop-netlify-app-mensproduct-2024-03-02-20_52_02.png)
+- [Cart Page](./Frontend/images/sc/screencapture-theeasyshop-netlify-app-cart-2024-03-02-20_54_56.png)
+- [OTP Page](./Frontend/images/sc/screencapture-127-0-0-1-5501-Frontend-otp-html-2024-03-06-23_59_21.png)
+- [Receipt Page](./Frontend/images/sc/screencapture-127-0-0-1-5501-Frontend-otp-html-2024-03-06-23_59_54.png)
 
+
+
+ 
 
 
 
