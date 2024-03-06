@@ -1,102 +1,28 @@
 const express = require("express");
-const { UserModel } = require("../models/User.models");
-const { BlacklistTokenModel } = require("../models/Blacklist.models");
-const { authonticate } = require("../middlewares/authonticate.middlewares")
-
-
-const jwt = require("jsonwebtoken");
-const bcrypt = require("bcrypt");
+const {
+    registerUser,
+    loginUser,
+    updateProfile,
+    refreshAccessToken,
+    logoutUser
+} = require("../controllers/user.controller"); 
 
 const userRouter = express.Router();
 
-userRouter.post("/register", async (req, res) => {
-    const { name, email, password, address } = req.body;
-    try {
-        const findEmail = await UserModel.findOne({ email });
-        if (findEmail) {
-            return res.status(400).json({"msg": "User already exists. Please login" });
-        }
-        const hashedPassword = await bcrypt.hash(password, 10);
-        const newUser = new UserModel({ name, email, password: hashedPassword, address });
-        await newUser.save();
-        res.status(201).json({ "msg": "New user registered successfully" });
-    } catch (err) {
-        console.error(err);
-        res.status(500).json({ "msg": "Something went wrong" });
-    }
-});
+// Route to register a new user
+userRouter.post("/register", registerUser);
 
-userRouter.post("/login", async (req, res) => {
-    
-    const { email, password } = req.body;
-    try {
-        const user = await UserModel.findOne({ email });
-        if (!user) {
-            return res.status(404).json({ "msg": "Email not found" });
-        }
-        const passwordMatch = await bcrypt.compare(password, user.password);
-        if (!passwordMatch) {
-            return res.status(401).json({ "msg": "Incorrect password" });
-        }
-        const token = jwt.sign({ userID: user._id }, 'masai', { expiresIn: '1h' });
-        const refreshtoken = jwt.sign({ userID: user._id }, 'refreshmasai', { expiresIn: '7h' });
-        res.json({ "msg": "Login successful", "token": token,"refreshtoken":refreshtoken,"user":user});
-    } catch (err) {
-        console.error(err);
-        res.status(500).json({ "msg": "Something went wrong" });
-    }
-});
+// Route to login
+userRouter.post("/login", loginUser);
 
-userRouter.patch("/updateprofile", authonticate, async (req, res) => {
-    const { userID,name, email, password,address } = req.body;
-    try {
-        // Find and update the user by their ID
-        const updatedUser = await UserModel.findById(userID);
+// Route to update user profile
+userRouter.patch("/updateprofile", updateProfile);
 
-        if (!updatedUser) {
-            return res.status(404).json({ "msg": "User not found" });
-        }
+// Route to refresh access token
+userRouter.post("/refresh-token", refreshAccessToken);
 
-        // If a new password is provided, hash it and update the user's password
-        if (password) {
-            const hashedPassword = await bcrypt.hash(password, 10);
-            updatedUser.password = hashedPassword;
-        }
-
-        // Update the user's name, email, and address
-        updatedUser.name = name || updatedUser.name;
-        updatedUser.email = email || updatedUser.email;
-        updatedUser.address = address || updatedUser.address;
-
-        await updatedUser.save(); // Save the updated user
-
-        res.json({ "msg": "User profile updated successfully" });
-    } catch (err) {
-        console.error(err);
-        res.status(500).json({ "msg": "Something went wrong" });
-    }
-});
-
-userRouter.post("/refresh-token", async (req, res) => {
-    const { refreshToken } = req.body;
-    const newToken = jwt.sign({ userID: "someUserID" }, 'masai', { expiresIn: '1h' });
-    res.json({ "token": newToken });
-});
-
-userRouter.post("/logout", async (req, res) => {
-    const { token } = req.body;
-    try {
-        const isTokenBlacklisted = await BlacklistTokenModel.findOne({ token });
-        if (isTokenBlacklisted) {
-            return res.status(401).json({ "msg": "Token is already blacklisted" });
-        }
-        await new BlacklistTokenModel({ token }).save();
-        res.json({ "msg": "Logout successful" });
-    } catch (err) {
-        console.error(err);
-        res.status(500).json({ "msg": "Something went wrong" });
-    }
-});
+// Route to logout
+userRouter.post("/logout", logoutUser);
 
 module.exports = {
     userRouter

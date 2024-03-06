@@ -14,20 +14,18 @@ app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended: true }));
 
 app.get("/", (req, res) => {
+    
     res.send("Home-Page of EasyShop_the shopping hub")
 
 })
 app.get("/alluserdata", (req, res) => {
-
-    const users = UserModel.find();
+     const users = UserModel.find();
     res.send(users)
-
-    //   res.status(500).send({ "msg": "Cannot get the User", "error": err.message });
 
 });
 app.use("/users",userRouter)
-
 app.use("/products",productRouter);
+
 app.listen(process.env.port, async () => {
 
     try {
