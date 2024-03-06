@@ -7,7 +7,7 @@ let displaywishcount = document.getElementById("wishcount");
 let productArr = [];
 
 // let localhostUrl = "http://localhost:8080/products/allwomenproducts";
-let deployedurl = "https://easyshop.cyclic.app/products/allwomenproducts"
+let deployedurl = "https://drab-plum-quail-belt.cyclic.app/products/allwomenproducts"
 
 
 async function getdata() {
