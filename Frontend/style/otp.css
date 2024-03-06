@@ -4,6 +4,7 @@
   height: 20%;
 
   margin: auto;
+
 }
 #inputDiv input{
   width: 10%;
@@ -27,9 +28,15 @@
 #otpDiv{
   margin: auto;
   width: 30%;
-  background-color: whitesmoke;
+  color: white;
   padding: 5%;
   text-align: center;
+  margin-top: 10%;
+  background-color:rgb(16,26,62);
+
+  
+  
+  
 }
 #butt{
   margin-left: 30%;
@@ -83,3 +90,11 @@
     margin-top: 10px;
     
   }
+
+  .custom-background {
+    background-image: url('../images/OTP-SMS-Gateway-Services.jpg');
+    /* Additional background styles */
+    background-repeat: no-repeat;
+    background-size: auto;
+  }
+  

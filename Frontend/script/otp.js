@@ -45,6 +45,31 @@
         let new_otp = otp();
         alert("Your new OTP is " + new_otp);
 
-        // Update the stored OTP in localStorage
         localStorage.setItem("otp", new_otp.toString());
     });
+
+
+var userJSON = localStorage.getItem('login_user');
+
+var user = JSON.parse(userJSON);
+
+var userName = user.name; 
+
+var receipt = document.getElementById('recipte2');
+var customerNameElement = document.getElementById('customerName');
+
+if (customerNameElement && userName) {
+  customerNameElement.textContent = userName;
+
+
+
+}
+
+
+var receipt = document.getElementById('recipte2');
+
+if (receipt.style.display === 'block') {
+//   document.body.style.backgroundImage = 'url("../Frontend/images/imagesfinal.jpeg")';
+   document.body.style.backgroundColor = "white"
+}
+

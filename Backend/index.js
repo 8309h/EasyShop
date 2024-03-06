@@ -14,9 +14,7 @@ app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended: true }));
 
 app.get("/", (req, res) => {
-    
     res.send("Home-Page of EasyShop_the shopping hub")
-
 })
 app.get("/alluserdata", (req, res) => {
      const users = UserModel.find();

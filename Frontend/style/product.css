@@ -108,14 +108,15 @@ footer{
 
     }
     #fix {
-        width: 35%;
-        position: fixed;
+        width: 100%;
+        position: relative;
         z-index: -1;
       
     }
     #container{
-        
-        grid-template-columns: repeat(1,1fr);
+        margin-top: 100px;
+        width: 100%;
+        grid-template-columns: repeat(2,1fr);
         grid-template-rows: auto;
         gap: 1%;
         margin-left: 30%;
