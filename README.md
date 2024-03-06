@@ -140,6 +140,13 @@ Endpoint: `DELETE /delete/:id`
 
 ## Screenshots
 
+
+### Register Page
+![Register Page](./Frontend/images/sc/screencapture-127-0-0-1-5501-Frontend-signup-html-2024-03-07-00_20_33.png)
+
+### Login Page
+![Index Page](./Frontend/images/sc/screencapture-127-0-0-1-5501-Frontend-login-html-2024-03-07-00_20_15.png)
+
 ### Index Page
 ![Index Page](./Frontend/images/sc/screencapture-theeasyshop-netlify-app-index-html-2024-03-02-20_48_24.png)
 
