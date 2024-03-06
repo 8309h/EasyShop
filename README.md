@@ -138,7 +138,7 @@ Endpoint: `DELETE /delete/:id`
   - Success: `{ "msg": "Product deleted successfully", "product": { /* Deleted product details */ } }`
   - Failure: `{ "msg": "Invalid category" }`, `{ "msg": "Product not found" }`, or `{ "msg": "Error deleting product" }`
 
-  ## Screenshots
+### Screenshots
 
 - [Index Page](./Frontend/images/sc/screencapture-theeasyshop-netlify-app-index-html-2024-03-02-20_48_24.png)
 - [Women's Product Page](./Frontend/images/sc/screencapture-theeasyshop-netlify-app-product-2024-03-02-20_50_03.png)
