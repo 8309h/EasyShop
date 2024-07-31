@@ -12,7 +12,7 @@ let deployedurl = "https://easy-shop-backend-ckq6.onrender.com/products/allwomen
 
 async function getdata() {
     try {
-        let res = await fetch(localhostUrl);
+        let res = await fetch(deployedurl);
         let data = await res.json();
         console.log("datafrom server",data)
         if (data && Array.isArray(data)) {
