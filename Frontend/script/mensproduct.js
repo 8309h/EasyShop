@@ -6,8 +6,8 @@ let displaywishcount = document.getElementById("wishcount");
 
 let productArr = [];
 
-let deployedurl = "https://drab-plum-quail-belt.cyclic.app/products/allmenproducts";
-// let localhostUrl = "http://localhost:8080/products/allmenproducts";
+let deployedurl = "https://easy-shop-backend-ckq6.onrender.com/products/allmenproducts";
+//let localhostUrl = "http://localhost:8080/products/allmenproducts";
 
 async function getdata() {
     try {
@@ -77,9 +77,10 @@ function addToCart(product) {
         cart.push({ ...product, quantity: 1 });
         localStorage.setItem("shopcartdata", JSON.stringify(cart));
         alert("Product Added To Cart ✔");
-        location.href = "cart.html";
+        location.href = "cart.html";ss
     } else {
         alert("Product Already in Cart ❌");
+        
     }
 }
 

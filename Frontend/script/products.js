@@ -6,13 +6,13 @@ let displaywishcount = document.getElementById("wishcount");
 
 let productArr = [];
 
-// let localhostUrl = "http://localhost:8080/products/allwomenproducts";
-let deployedurl = "https://drab-plum-quail-belt.cyclic.app/products/allwomenproducts"
+//let localhostUrl = "http://localhost:8080/products/allwomenproducts";
+let deployedurl = "https://easy-shop-backend-ckq6.onrender.com/products/allwomenproducts"
 
 
 async function getdata() {
     try {
-        let res = await fetch(deployedurl);
+        let res = await fetch(localhostUrl);
         let data = await res.json();
         console.log("datafrom server",data)
         if (data && Array.isArray(data)) {
@@ -55,7 +55,7 @@ function displayData(data) {
         let price = document.createElement("p");
         price.textContent = "₹ " + el.Price;
 
-        let buynow = createButton("CART", () => addToCart(el));
+        let buynow = createButton("CART TO CART", () => addToCart(el));
 
         let wishlist = createButton("WISHLIST", () => addToWishlist(el));
 
@@ -75,12 +75,13 @@ function createButton(text, onClickHandler) {
 
 function addToCart(product) {
     if (!isProductInCart(product)) {
-        cart.push({ ...product, quantity: 1 });
+        cart.push({ ...product, quantity:  1});
         localStorage.setItem("shopcartdata", JSON.stringify(cart));
         alert("Product Added To Cart ✔");
         // location.href = "cart.html";
     } else {
         alert("Product Already in Cart ❌");
+        
     }
 }
 

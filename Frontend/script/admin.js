@@ -56,7 +56,7 @@ document.querySelector("#resendotp").addEventListener("click", function (e) {
 
     }
     console.log(payload)
-    fetch("https://jittery-ruby-salmon.cyclic.app/products/create", {
+    fetch("https://easy-shop-backend-ckq6.onrender.com/products/create", {
             method: "POST",
             headers: {
                 "Content-type": "application/json",

@@ -18,7 +18,9 @@ function myfun(event) {
         alert("All fields are required");
     } else {
         let payload = { name, email, password, address };
-        let deployed = "https://drab-plum-quail-belt.cyclic.app/users/register";
+        let deployed = "https://easy-shop-backend-ckq6.onrender.com/users/register";
+
+       
 
         fetch(deployed, {
             method: "POST",
