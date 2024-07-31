@@ -97,11 +97,13 @@
 
     <div id="container">
         <div id="maindiv" style="text-align: left;">
-            <h1>CHECK EASY SHOP<br> BEFORE YOUR BUY</h1>
-            <p>We Are not a store we are your shoping assistant</p>
+            <h1 style="color:black;">CHECK EASY SHOP<br> BEFORE YOUR BUY</h1>
+            <p style="color: black;">We Are not a store we are your shoping assistant</p>
             <a href="./login.html"><button>JOIN NOW FOR FREE</button></a>
         </div>
-        <div><img src="https://cdn.modesens.com/static/img/20221009_bg1.png" alt="">
+        <div>
+            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR2o09ztmF7LPpqO-80mbCFlOvnDlkF0CwI7w&usqp=CAU" alt="">
+            <!-- <img src="https://cdn.modesens.com/static/img/20221009_bg1.png" alt=""> -->
         </div>
         <div id="laptop">
             <div id="laptop2">
@@ -265,7 +267,7 @@
             // Fetch endpoint for logout
             let tokn =localStorage.getItem('token')
             console.log(tokn)
-            const response = await fetch('https://drab-plum-quail-belt.cyclic.app/users/logout', {
+            const response = await fetch('https://easy-shop-backend-ckq6.onrender.com/users/logout', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
