@@ -3,6 +3,7 @@
 # Project Documentation
 
 ## Project Overview
+Hello it about project
 
 This project is a Node.js application that provides functionality for user authentication, product management, and an e-commerce platform. It includes two main modules: `userRouter` for user-related operations (registration, login, profile update, and token management), and `productRouter` for managing products (creation, retrieval, updating, and deletion).
 

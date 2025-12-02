@@ -18,7 +18,7 @@ function myfun(event) {
         alert("All fields are required");
     } else {
         let payload = { name, email, password, address };
-        let deployed = "https://easy-shop-backend-ckq6.onrender.com/users/register";
+        let deployed = "http://localhost:8080/users/register";
 
        
 
