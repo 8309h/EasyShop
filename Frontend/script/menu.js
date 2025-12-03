@@ -54,3 +54,22 @@ if (dropdown && dropdownMenu) {
     dropdownMenu.style.display = "none";
   });
 }
+// menu.js — global navigation helper functions
+
+function goToLogin() {
+  window.location.href = "login.html";
+}
+
+function goToSignup() {
+  window.location.href = "signup.html";
+}
+
+function goToProfile() {
+  window.location.href = "profile.html";
+}
+
+function logout() {
+  localStorage.removeItem("eshop_token");
+  localStorage.removeItem("eshop_user");
+  window.location.href = "login.html";
+}
