@@ -1,15 +1,13 @@
-// ================================
-// ordersuccess.js — FINAL VERSION
-// ================================
+// ordersuccess.js — Load invoice & render Razorpay style invoice
 
 const invoice = JSON.parse(localStorage.getItem("latest_invoice"));
 
 if (!invoice) {
-  document.body.innerHTML = "<h2 style='text-align:center;'>Invoice not found!</h2>";
-  throw new Error("No invoice");
+  document.body.innerHTML = "<h2 style='text-align:center;margin-top:40px;'>No invoice found!</h2>";
+  throw new Error("Invoice missing");
 }
 
-// Header
+// Invoice meta
 document.getElementById("inv-id").textContent = "Invoice ID: " + invoice.id;
 document.getElementById("inv-date").textContent = "Date: " + invoice.date;
 
@@ -24,29 +22,28 @@ document.getElementById("inv-shipping").innerHTML = `
 `;
 
 // Items
-document.getElementById("inv-items").innerHTML =
-  invoice.items
-    .map(it => `
-      <tr>
-        <td>${it.title}</td>
-        <td>${it.qty}</td>
-        <td>₹${it.price}</td>
-        <td>₹${it.total}</td>
-      </tr>
-    `)
-    .join("");
+let rows = "";
+invoice.items.forEach(it => {
+  rows += `
+    <tr>
+      <td>${it.title}</td>
+      <td>${it.qty}</td>
+      <td>₹${it.price}</td>
+      <td>₹${it.total}</td>
+    </tr>
+  `;
+});
+document.getElementById("inv-items").innerHTML = rows;
 
 // Summary
 document.getElementById("s-subtotal").textContent = "₹" + invoice.subtotal;
 document.getElementById("s-discount").textContent = "-₹" + invoice.discount;
 document.getElementById("s-gst").textContent = "₹" + invoice.gst;
-document.getElementById("s-delivery").textContent =
-  invoice.delivery === 0 ? "FREE" : "₹" + invoice.delivery;
+document.getElementById("s-delivery").textContent = invoice.delivery === 0 ? "FREE" : "₹" + invoice.delivery;
 document.getElementById("s-total").textContent = "₹" + invoice.total;
 
 // PDF
-document.getElementById("downloadPDF").addEventListener("click", async () => {
-  await import("https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js");
-  const element = document.querySelector(".invoice-container");
-  html2pdf().from(element).save(`Invoice-${invoice.id}.pdf`);
+document.getElementById("downloadPDF").addEventListener("click", () => {
+  const el = document.querySelector(".invoice-container");
+  html2pdf().from(el).save(`Invoice-${invoice.id}.pdf`);
 });

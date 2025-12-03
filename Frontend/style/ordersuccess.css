@@ -1,49 +1,80 @@
-body {
-  background: #f5f6fa;
-  font-family: 'Inter', sans-serif;
+/* ==============================
+   GLOBAL RESET
+============================== */
+* {
   margin: 0;
-  padding: 20px;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Inter", Arial, sans-serif;
 }
 
-/* Success box */
+/* ==============================
+   SUCCESS BOX
+============================== */
 .success-container {
   text-align: center;
-  padding: 30px 10px;
+  padding: 40px 20px;
+  animation: fadeIn 0.8s ease;
 }
 
 .success-icon {
-  width: 70px;
-  height: 70px;
-  background: #4caf50;
-  color: #fff;
+  font-size: 48px;
+  color: #2ecc71;
+  background: #eafaf1;
+  width: 90px;
+  height: 90px;
+  margin: 0 auto 15px;
   border-radius: 50%;
-  display: inline-flex;
-  justify-content: center;
+  display: flex;
   align-items: center;
-  font-size: 32px;
-  margin-bottom: 12px;
+  justify-content: center;
+  font-weight: bold;
+}
+
+.success-container h1 {
+  font-size: 28px;
+  margin-bottom: 5px;
+  color: #222;
+}
+
+.success-container p {
+  font-size: 16px;
+  color: #666;
 }
 
 .home-btn {
-  margin-top: 12px;
-  padding: 12px 20px;
+  margin-top: 18px;
+  padding: 12px 26px;
+  background: #111;
+  color: white;
   border: none;
-  background: #ff1744;
-  color: #fff;
   border-radius: 6px;
   cursor: pointer;
+  font-size: 16px;
+  transition: 0.2s ease;
 }
 
-/* Invoice Box */
+.home-btn:hover {
+  background: #333;
+}
+
+/* ==============================
+   INVOICE CONTAINER
+============================== */
 .invoice-container {
-  max-width: 700px;
-  margin: 20px auto;
+  width: 90%;
+  max-width: 780px;
   background: #fff;
-  padding: 25px;
+  margin: 40px auto;
+  padding: 25px 30px;
   border-radius: 12px;
-  box-shadow: 0 4px 18px rgba(0,0,0,0.08);
+  box-shadow: 0 8px 20px rgba(0,0,0,0.08);
+  animation: fadeIn 0.8s ease;
 }
 
+/* ==============================
+   HEADER AREA
+============================== */
 .invoice-header {
   display: flex;
   justify-content: space-between;
@@ -51,60 +82,133 @@ body {
 }
 
 .invoice-logo img {
-  width: 120px;
+  height: 55px;
 }
 
-.invoice-meta {
-  text-align: right;
+.invoice-meta h2 {
+  margin-bottom: 6px;
+  font-size: 22px;
 }
 
-hr {
-  margin: 20px 0;
+.invoice-meta p {
+  color: #555;
+  font-size: 14px;
 }
 
+/* ==============================
+   SHIPPING DETAILS
+============================== */
 .shipping-box {
-  background: #f8f9fc;
-  padding: 12px;
-  border-radius: 6px;
-  margin-bottom: 20px;
+  background: #f8f9fa;
+  padding: 15px 18px;
+  border-left: 4px solid #111;
+  margin: 10px 0 20px;
+  font-size: 15px;
+  line-height: 1.5;
 }
 
+/* ==============================
+   ITEM TABLE
+============================== */
 .inv-table {
   width: 100%;
   border-collapse: collapse;
+  margin-top: 15px;
   margin-bottom: 20px;
 }
 
-.inv-table th,
+.inv-table th {
+  text-align: left;
+  background: #f1f1f1;
+  padding: 10px;
+  font-size: 15px;
+}
+
 .inv-table td {
   padding: 10px;
   border-bottom: 1px solid #eee;
+  font-size: 14px;
 }
 
+/* ==============================
+   SUMMARY BOX
+============================== */
 .summary-box {
-  padding: 15px;
-  background: #f8f9fc;
+  background: #fafafa;
   border-radius: 8px;
+  padding: 18px;
+  margin-top: 20px;
+  border-left: 4px solid #444;
 }
 
 .srow {
   display: flex;
   justify-content: space-between;
   padding: 6px 0;
+  font-size: 15px;
 }
 
-.total {
-  font-weight: 700;
-  font-size: 18px;
+.srow.total {
+  font-weight: bold;
+  font-size: 17px;
+  padding-top: 10px;
+  border-top: 2px solid #ddd;
 }
 
+/* ==============================
+   PDF BUTTON
+============================== */
 .pdf-btn {
+  margin-top: 25px;
+  display: block;
   width: 100%;
-  padding: 14px;
-  background: #ff1744;
-  color: #fff;
+  background: #111;
+  color: white;
+  text-align: center;
+  padding: 12px 0;
+  border-radius: 6px;
   border: none;
-  border-radius: 8px;
+  font-size: 16px;
   cursor: pointer;
-  margin-top: 20px;
+  transition: 0.2s ease;
+}
+
+.pdf-btn:hover {
+  background: #333;
+}
+
+/* ==============================
+   ANIMATION
+============================== */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to   { opacity: 1; transform: translateY(0);  }
+}
+
+/* ==============================
+   RESPONSIVE
+============================== */
+@media (max-width: 600px) {
+  .invoice-container {
+    padding: 18px;
+  }
+
+  .invoice-header {
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .inv-table th,
+  .inv-table td {
+    font-size: 13px;
+    padding: 8px;
+  }
+
+  .summary-box {
+    padding: 14px;
+  }
+
+  .srow {
+    font-size: 14px;
+  }
 }

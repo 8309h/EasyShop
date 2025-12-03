@@ -3,118 +3,107 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-
   <title>Checkout — EasyShop</title>
 
   <!-- Icons -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 
-  <!-- Payment Styles -->
+  <!-- Payment Styles (your file) -->
   <link rel="stylesheet" href="./style/payment.css">
 
-  <!-- SweetAlert2 (FIXED HTTPS URL) -->
+  <!-- SweetAlert2 -->
   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </head>
 
 <body>
 
-  <!-- HEADER -->
   <header class="site-header">
-    <div class="logo"><a href="index.html">
-      <img src="./images/logo2.png" alt="EasyShop">
-    </a></div>
+    <div class="logo"><a href="index.html"><img src="./images/logo2.png" alt="EasyShop"></a></div>
     <h1 class="site-title">Checkout</h1>
   </header>
 
-  <!-- MAIN LAYOUT -->
   <main class="checkout-wrap">
 
-    <!-- LEFT COLUMN -->
     <section class="left-col">
 
-      <!-- SHIPPING FORM -->
       <div class="card card-form">
         <h2>Shipping details</h2>
 
         <form id="shippingForm" autocomplete="on">
           <div class="row">
             <label>Full name
-              <input id="ship_name" required placeholder="Full name">
+              <input id="ship_name" name="ship_name" required placeholder="Full name">
             </label>
 
             <label>Phone
-              <input id="ship_phone" required placeholder="Phone" pattern="[0-9]{7,15}">
+              <input id="ship_phone" name="ship_phone" required placeholder="Phone" pattern="[0-9]{7,15}">
             </label>
           </div>
 
           <label>Address line 1
-            <input id="ship_addr1" required placeholder="House, building, street">
+            <input id="ship_addr1" name="ship_addr1" required placeholder="House, building, street">
           </label>
 
           <label>Address line 2
-            <input id="ship_addr2" placeholder="Landmark / area (optional)">
+            <input id="ship_addr2" name="ship_addr2" placeholder="Landmark / area (optional)">
           </label>
 
           <div class="row">
             <label>City
-              <input id="ship_city" required placeholder="City">
+              <input id="ship_city" name="ship_city" required placeholder="City">
             </label>
 
             <label>Pin / ZIP
-              <input id="ship_zip" required placeholder="PIN / ZIP">
+              <input id="ship_zip" name="ship_zip" required placeholder="PIN / ZIP">
             </label>
           </div>
 
           <div class="row">
             <label>State
-              <input id="ship_state" required placeholder="State">
+              <input id="ship_state" name="ship_state" required placeholder="State">
             </label>
 
             <label>Country
-              <input id="ship_country" required placeholder="Country" value="India">
+              <input id="ship_country" name="ship_country" required placeholder="Country" value="India">
             </label>
           </div>
         </form>
       </div>
 
-      <!-- PAYMENT METHODS (FIXED RADIO + CUSTOM UI) -->
       <div class="card card-form">
         <h2>Payment method</h2>
 
-        <!-- NEW ANIMATED PAYMENT UI -->
-        <div class="payment-methods">
-
-          <div class="pmethod" data-method="card">
-            <span class="custom-radio"></span>
-            <img src="./icons/card.png" class="pmethod-icon">
+        <div class="payment-methods" id="paymentMethods">
+          <div class="pmethod active" data-method="card" tabindex="0" role="button" aria-pressed="true">
+            <span class="custom-radio" aria-hidden="true"></span>
+            <img src="./images/cardimagepayment.png" class="pmethod-icon" alt="card icon">
             <div class="pmethod-info">
               <h3>Credit / Debit Card</h3>
-              <p>Visa, Mastercard, RuPay supported</p>
+              <p>Visa, Mastercard, RuPay</p>
             </div>
           </div>
 
-          <div class="pmethod" data-method="upi">
-            <span class="custom-radio"></span>
-            <img src="./icons/upi.png" class="pmethod-icon">
+          <div class="pmethod" data-method="upi" tabindex="0" role="button" aria-pressed="false">
+            <span class="custom-radio" aria-hidden="true"></span>
+            <img src="./images/upiimage.png" class="pmethod-icon" alt="upi icon">
             <div class="pmethod-info">
               <h3>UPI</h3>
-              <p>Pay using GPay, PhonePe, Paytm</p>
+              <p>GPay / PhonePe / Paytm</p>
             </div>
           </div>
 
-          <div class="pmethod" data-method="cod">
-            <span class="custom-radio"></span>
-            <img src="./icons/cod.png" class="pmethod-icon">
+          <div class="pmethod" data-method="cod" tabindex="0" role="button" aria-pressed="false">
+            <span class="custom-radio" aria-hidden="true"></span>
+            <img src="./images/cashimage.png" class="pmethod-icon" alt="cod icon">
             <div class="pmethod-info">
               <h3>Cash On Delivery</h3>
-              <p>Pay with cash/UPI on delivery</p>
+              <p>Pay on delivery</p>
             </div>
           </div>
 
-          <div id="pmethod-highlight"></div>
+          <div id="pmethod-highlight" aria-hidden="true"></div>
         </div>
 
-        <!-- CARD FORM -->
         <div id="cardForm" class="payment-panel">
           <label>Card number
             <input id="card_number" placeholder="4242 4242 4242 4242" maxlength="19" inputmode="numeric">
@@ -130,25 +119,21 @@
           </label>
         </div>
 
-        <!-- UPI FORM -->
         <div id="upiForm" class="payment-panel hidden">
           <label>UPI ID
             <input id="upi_id" placeholder="example@upi">
           </label>
-          <p class="muted">A UPI payment request will be sent to your app.</p>
+          <p class="muted">A UPI payment request will be sent to your app (simulated).</p>
         </div>
 
-        <!-- COD NOTE -->
         <div id="codNote" class="payment-panel hidden">
-          <p class="muted">Cash on Delivery selected. Please keep the exact amount ready.</p>
+          <p class="muted">Cash on Delivery selected. Please keep the exact amount ready. Delivery rules apply.</p>
         </div>
 
       </div>
 
-      <!-- COUPON -->
       <div class="card card-form">
         <h2>Apply coupon</h2>
-
         <form id="couponForm">
           <div class="row">
             <input id="couponInput" placeholder="Enter coupon (e.g. HM-DEC)">
@@ -160,10 +145,8 @@
 
     </section>
 
-    <!-- RIGHT COLUMN — ORDER SUMMARY -->
     <aside class="right-col">
       <div class="card card-summary">
-
         <h2>Order summary</h2>
 
         <div id="summaryItems" class="summary-items"></div>
@@ -178,7 +161,7 @@
           <strong id="summaryTotal">₹0</strong>
         </div>
 
-        <div class="small-muted">All prices in INR. Taxes included.</div>
+        <div class="small-muted">All prices in INR. Taxes included where applicable.</div>
 
         <button id="payBtn" class="btn primary large">Process</button>
       </div>

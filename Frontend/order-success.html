@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Order Success — EasyShop</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <!-- Styles -->
+  <link rel="stylesheet" href="./style/ordersuccess.css">
+
+  <!-- SweetAlert -->
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+  <!-- html2pdf (loaded dynamically in JS also) -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+</head>
+
+<body>
+
+  <!-- SUCCESS MESSAGE -->
+  <div class="success-container">
+    <div class="success-icon">✔</div>
+    <h1>Payment Successful</h1>
+    <p>Your order has been placed successfully!</p>
+    <button onclick="window.location.href='index.html'" class="home-btn">Continue Shopping</button>
+  </div>
+
+  <!-- ===================== INVOICE SECTION (Razorpay Style) ===================== -->
+  <div class="invoice-container">
+
+    <div class="invoice-header">
+      <div class="invoice-logo">
+        <img src="./images/logo2.png" alt="EasyShop">
+      </div>
+
+      <div class="invoice-meta">
+        <h2>Invoice</h2>
+        <p id="inv-id"></p>
+        <p id="inv-date"></p>
+      </div>
+    </div>
+
+    <hr>
+
+    <!-- SHIPPING -->
+    <h3>Billing & Shipping Details</h3>
+    <div id="inv-shipping" class="shipping-box"></div>
+
+    <!-- ITEMS -->
+    <h3>Order Items</h3>
+    <table class="inv-table">
+      <thead>
+        <tr>
+          <th>Item</th>
+          <th>Qty</th>
+          <th>Price</th>
+          <th>Total</th>
+        </tr>
+      </thead>
+      <tbody id="inv-items"></tbody>
+    </table>
+
+    <!-- SUMMARY -->
+    <div class="summary-box">
+      <div class="srow"><span>Subtotal</span><span id="s-subtotal"></span></div>
+      <div class="srow"><span>Discount</span><span id="s-discount"></span></div>
+      <div class="srow"><span>GST (5%)</span><span id="s-gst"></span></div>
+      <div class="srow"><span>Delivery Charges</span><span id="s-delivery"></span></div>
+      <div class="srow total"><span>Total Payable</span><span id="s-total"></span></div>
+    </div>
+
+    <button id="downloadPDF" class="pdf-btn">Download Invoice PDF</button>
+
+  </div>
+
+  <!-- JS -->
+  <script src="./script/ordersuccess.js"></script>
+
+</body>
+</html>

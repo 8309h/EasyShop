@@ -39,8 +39,13 @@ async function getProducts(req, res) {
     }
 
     if (search) {
-      query.$text = { $search: search };
+      query.$or = [
+        { title: { $regex: search, $options: "i" } },
+        { description: { $regex: search, $options: "i" } },
+        { category: { $regex: search, $options: "i" } }
+      ];
     }
+
 
     const sortOption = {};
     sortOption[sort] = order === "asc" ? 1 : -1;
