@@ -65,11 +65,11 @@ function goToSignup() {
 }
 
 function goToProfile() {
-  window.location.href = "profile.html";
+  window.location.href = "profileupdate.html";
 }
 
 function logout() {
-  localStorage.removeItem("eshop_token");
-  localStorage.removeItem("eshop_user");
+  localStorage.removeItem("token");
+  localStorage.removeItem("refreshToken");
   window.location.href = "login.html";
 }
