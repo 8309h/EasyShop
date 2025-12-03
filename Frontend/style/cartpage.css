@@ -1,146 +1,336 @@
-#flex {
-    
-    width: 90%;
+/* =========================
+   GLOBAL VARIABLES
+   ========================= */
+:root {
+    --bg: #f5f6f8;
+    --card: #ffffff;
+    --muted: #6b7280;
+    --accent: #ff1744;
+    --accent-dark: #d10a35;
+    --ink: #111827;
+    --radius: 12px;
+    --shadow-sm: 0 6px 18px rgba(13, 20, 30, 0.06);
+    --shadow-md: 0 12px 30px rgba(13, 20, 30, 0.12);
+    --max-width: 1280px;
+    --transition: 0.25s ease;
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: "Inter", system-ui;
+    background: var(--bg);
+    color: var(--ink);
+}
+
+/* =========================
+   NAVBAR
+   ========================= */
+.nav-top-strip {
+    background: #0f172a;
+    color: #fff;
+    padding: 8px;
+    text-align: center;
+    font-size: 14px;
+}
+
+.navbar {
+    background: var(--card);
+    box-shadow: var(--shadow-sm);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+}
+
+.nav-main {
+    max-width: var(--max-width);
     margin: auto;
     display: flex;
-    gap: 5%;
-}
-#total {
-   
-    width: 30%;
-    position: fixed;
-    z-index: 1;
-    top: 17%;
-    padding: 2%;
-    
-
+    align-items: center;
+    padding: 12px 20px;
+    justify-content: space-between;
 }
 
-#total h1 {
-    font-family: 'Trebuchet MS', 'Lucida Sans Unicode',
-        'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
-    text-align: center;
-    color:  #222;;
-}
-#finalprice{
-   
-    margin: auto;
-    padding: 2%;
-    margin-top: 2%;
-    border-radius:5px ;
-
-
+.logo img {
+    height: 55px;
 }
 
-
-#finalprice input {
-    width: 90%;
-    margin: auto;
-    padding: 3% 0px 3% 0px;
-    margin-bottom: 7px;
-    margin-left: 15px;
-    text-align: center;
-
+.nav-center a {
+    margin: 0 10px;
+    text-decoration: none;
+    font-weight: 500;
+    color: var(--ink);
 }
 
-#finalprice +a>button {
-    width: 90%;
-    margin: auto;
-    padding: 3% 0px 3% 0px;
-    margin-top: 30px;
-    background-color: black;
-    color: white;
-    border: none;
-    border-radius: 5px;
-    margin-left: 15px;
-
-
+.nav-center a:hover {
+    color: var(--accent);
 }
 
-#finalprice +a>button:hover {
+.nav-right i {
     font-size: 20px;
-    cursor: pointer;
-    background-color: #666;
-    border: none;
-    border-radius: 5px;
 }
 
- #offer {
-   
+.badge {
+    background: var(--accent);
+    padding: 2px 6px;
+    font-size: 12px;
+    color: #fff;
+    border-radius: 50%;
+    vertical-align: top;
+    margin-left: 4px;
+}
+
+/* =========================
+   PAGE TITLE
+   ========================= */
+.cart-title {
+    text-align: center;
+    margin: 25px 0;
     font-size: 30px;
-    font-weight: bold;
-    font-family: 'Trebuchet MS', 'Lucida Sans Unicode',
-        'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
-    text-align: center;
-   
-
-} 
-
-#offer>p {
-    font-size: 20px;
-    border: none;
-
-} 
-#cart-container{
-    width: 70%;
-    display: grid;
-    grid-template-columns: repeat(2,1fr);
-    grid-template-rows: auto;
-    gap: 3%;
-    margin-left: 40%;
-    margin-bottom: 100px;
+    font-weight: 600;
 }
-#cart-container>div {
-    width: 95%;
+
+/* =========================
+   MAIN CART LAYOUT
+   ========================= */
+.container {
+    max-width: var(--max-width);
+    margin: auto;
+    padding: 0 20px 40px;
+}
+
+.cart-layout {
     display: flex;
-    gap: 7%;
-    padding: 1%;
-    box-shadow: rgba(7, 7, 7, 0.35) 0px 5px 15px;
-    /* box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;/ */
-    /* border: 1px solid gray; */
-   
-
-}
-#cart-container>div img{
-    width: 100%;
-    
-
-}
-#cart-container>div>div+div{
-   width: 70%;
+    gap: 30px;
 }
 
+/* =========================
+   LEFT: CART ITEMS
+   ========================= */
+.cart-items {
+    flex: 2;
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+}
 
-#cart-container>div>div p{
+/* Single item */
+.cart-item {
+    display: flex;
+    gap: 20px;
+    background: var(--card);
+    padding: 18px;
+    border-radius: var(--radius);
+    box-shadow: var(--shadow-sm);
+    align-items: flex-start;
+}
+
+/* product image */
+.cart-item img {
+    width: 140px;
+    height: 160px;
+    border-radius: 10px;
+    object-fit: cover;
+}
+
+/* item info */
+.cart-info {
+    flex: 1;
+}
+
+.cart-info h3 {
+    font-size: 18px;
+    margin-bottom: 8px;
+}
+
+.cart-info p {
+    color: var(--muted);
+    font-size: 15px;
+    margin-bottom: 5px;
+}
+
+.cart-price {
+    font-size: 22px;
+    color: var(--accent);
     font-weight: bold;
+    margin: 10px 0;
 }
-#cart-container>div button{
-    background-color: lavender;
-    color: black;
-    padding: 2% 5%;
-    margin-right: 2%;
+
+/* QTY BOX */
+.qty-box {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+}
+
+.qty-btn {
+    width: 32px;
+    height: 32px;
+    border-radius: 6px;
     border: none;
+    background: var(--accent);
+    color: #fff;
+    cursor: pointer;
+    font-size: 20px;
+    transition: var(--transition);
 }
-#cart-container>div button+button{
-    background-color: black;
-    color: white;
-    padding: 2% 5%;
-} 
-form input{
+
+.qty-btn:hover {
+    background: var(--accent-dark);
+}
+
+.qty-value {
+    font-size: 17px;
+    font-weight: 600;
+}
+
+/* Remove button */
+.remove-btn {
+    padding: 8px 16px;
+    margin-top: 12px;
+    background: #111;
+    border: none;
+    color: #fff;
+    border-radius: 6px;
+    cursor: pointer;
+    width: fit-content;
+}
+
+.remove-btn:hover {
+    opacity: 0.85;
+}
+
+/* EMPTY CART */
+.empty-cart {
+    background: var(--card);
+    padding: 30px;
+    border-radius: 12px;
+    box-shadow: var(--shadow-sm);
     text-align: center;
 }
 
-@media (min-width: 100px) and (max-width: 700px){
+.empty-cart h3 {
+    margin-bottom: 10px;
+}
 
-    #cart-container{
-        width: 50%;
-        grid-template-columns: repeat(1,1fr);
-        grid-template-rows: auto;
-        gap: 3%;
-        margin-left: 60%;
-        margin-bottom: 100px;
+/* =========================
+   RIGHT: ORDER SUMMARY
+   ========================= */
+.cart-summary {
+    flex: 1;
+    background: var(--card);
+    padding: 20px;
+    border-radius: var(--radius);
+    box-shadow: var(--shadow-sm);
+    height: fit-content;
+    position: sticky;
+    top: 90px;
+}
+
+.cart-summary h2 {
+    margin-bottom: 15px;
+    font-size: 20px;
+}
+
+.summary-line {
+    display: flex;
+    justify-content: space-between;
+    margin: 8px 0;
+    font-size: 16px;
+}
+
+.total strong {
+    font-size: 20px;
+}
+
+/* Coupon */
+.coupon-box {
+    display: flex;
+    gap: 10px;
+    margin-top: 12px;
+}
+
+.coupon-box input {
+    flex: 1;
+    padding: 10px;
+    border-radius: 8px;
+    border: 1px solid #ccc;
+}
+
+.coupon-box button {
+    padding: 10px 14px;
+    background: #111;
+    color: #fff;
+    border-radius: 8px;
+    border: none;
+}
+
+/* BUY NOW */
+.buy-now-btn {
+    margin-top: 16px;
+    width: 100%;
+    padding: 12px;
+    background: linear-gradient(to bottom, var(--accent), var(--accent-dark));
+    color: #fff;
+    border: none;
+    border-radius: 10px;
+    font-size: 17px;
+    font-weight: 600;
+    cursor: pointer;
+    box-shadow: var(--shadow-sm);
+}
+
+.buy-now-btn:hover {
+    transform: translateY(-2px);
+}
+
+/* Coupon info */
+.coupon-info {
+    text-align: center;
+    margin-top: 12px;
+    font-size: 14px;
+    color: var(--muted);
+}
+
+/* =========================
+   RESPONSIVE (TABLET)
+   ========================= */
+@media (max-width: 900px) {
+    .cart-layout {
+        flex-direction: column;
     }
 
+    .cart-summary {
+        position: relative;
+        top: 0;
+        width: 100%;
+    }
 }
 
+/* =========================
+   RESPONSIVE (MOBILE)
+   ========================= */
+@media (max-width: 600px) {
+    .cart-item {
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+    }
 
+    .cart-item img {
+        width: 200px;
+        height: 220px;
+    }
+
+    .qty-box {
+        justify-content: center;
+    }
+
+    .remove-btn {
+        width: 100%;
+    }
+}

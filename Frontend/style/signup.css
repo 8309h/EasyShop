@@ -1,82 +1,287 @@
+/* ========== GLOBAL ========== */
 * {
-    margin: 0;
-    padding: 0;
-    scroll-behavior: smooth;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
 
+:root {
+  --primary: #e11d48;
+  --primary-soft: rgba(225, 29, 72, 0.08);
+  --dark: #0f172a;
+  --text: #111827;
+  --muted: #6b7280;
+  --border: #e5e7eb;
+  --bg: #f3f4f6;
+  --white: #ffffff;
+  --radius-md: 12px;
+  --radius-lg: 18px;
+  --shadow-soft: 0 18px 45px rgba(15, 23, 42, 0.14);
+  --transition-fast: 0.2s ease-in-out;
+}
+
+html {
+  scroll-behavior: smooth;
 }
 
 body {
-
-    margin: auto;
-
-}
-input ,button{
-    width: 100%;
-    padding: 12px 10px;
-    color: black;
-    margin-top: 5px;
-    margin-bottom: 10px;
-    box-sizing: border-box;
-    resize: vertical;
-   
-}
-#logo{
-    width: 70%;
-     margin: auto;
-   
-    
-}
-#logo img{
-    width: 100%;
-   
-}
-#container{
-    display: block;
-    width: 70%;
-    height: 100%;
-    gap: 0px;
-    display: flex;
-    margin: auto;
-    margin-top: 5%;
-    box-shadow: rgba(85, 85, 116, 0.2) 0px 7px 29px 0px;
-   
-    
-   
-}
-#black{
-    width: 50%;
-    background-color: white;
-    color: black;
-    
-   
-}
-#black h1,p,h3{
-    margin-left: 15%;
-    margin-bottom: 5%;
-}
-#hide{
-    width: 50px;
-    text-align: center;
-    color: black;
-    background-color: white;
-    border: none;
-    margin-left: 80%;
-   
-}
-#white{
-    width: 50%;
-    box-shadow: rgba(85, 85, 116, 0.2) 0px 7px 29px 0px;
-  
+  min-height: 100vh;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  background: radial-gradient(circle at top, #fee2e2 0, #f3f4f6 40%, #e5e7eb 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px 12px;
 }
 
+/* ========== SHARED INPUT / BUTTON ========== */
+
+input,
+button {
+  font-family: inherit;
+}
+
+input,
+button {
+  width: 100%;
+  padding: 10px 12px;
+  margin-top: 5px;
+  margin-bottom: 10px;
+  border-radius: 999px;
+  border: 1px solid var(--border);
+  font-size: 14px;
+  box-sizing: border-box;
+  resize: vertical;
+}
+
+input:focus {
+  outline: none;
+  border-color: var(--primary);
+  box-shadow: 0 0 0 1px rgba(225, 29, 72, 0.2);
+}
+
+/* ========== CONTAINER ========== */
+
+#container {
+  width: 100%;
+  max-width: 960px;
+  display: flex;
+  gap: 0;
+  background-color: transparent;
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-soft);
+  overflow: hidden;
+}
+
+/* ========== LEFT PANEL (#black) ========== */
+
+#black {
+  width: 50%;
+  background: radial-gradient(circle at top left, #f97316 0, #facc15 38%, #fef3c7 100%);
+  color: #111827;
+  padding: 34px 28px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+#logo {
+  width: 70%;
+  margin: 0 auto 28px auto;
+}
+
+#logo img {
+  width: 100%;
+  display: block;
+}
+
+#black h1 {
+  font-size: 24px;
+  line-height: 1.3;
+  margin-bottom: 10px;
+}
+
+#black p {
+  font-size: 13px;
+  letter-spacing: 0.08em;
+  margin-bottom: 10px;
+}
+
+#black h3 {
+  font-size: 14px;
+  margin-bottom: 8px;
+}
+
+/* ========== RIGHT PANEL (#white) ========== */
+
+#white {
+  width: 50%;
+  background-color: var(--white);
+  padding-top: 10px;
+  position: relative;
+}
+
+/* close button */
+#hide {
+  width: 40px;
+  height: 40px;
+  margin-left: auto;
+  margin-right: 12px;
+  margin-top: 8px;
+  border-radius: 999px;
+  border: none;
+  background: transparent;
+  color: var(--muted);
+  font-size: 22px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: background var(--transition-fast), color var(--transition-fast), transform var(--transition-fast);
+}
+
+#hide:hover {
+  background: #f3f4f6;
+  color: var(--primary);
+  transform: translateY(-1px);
+}
+
+/* form box */
 form {
-    width:80%;
-    margin: auto;
-    font-size: bolder;
-    margin-top: 10%;
-   
-}
-form p,h3{
-    text-align: left;
+  width: 80%;
+  margin: 0 auto 26px auto;
+  margin-top: 10%;
+  font-weight: 500;
 }
 
+form h2 {
+  font-size: 22px;
+  margin-bottom: 18px;
+}
+
+form label {
+  display: inline-block;
+  font-size: 13px;
+  font-weight: 600;
+  margin-top: 4px;
+  color: var(--dark);
+}
+
+form input[type="text"],
+form input[type="email"],
+form input[type="password"] {
+  border-radius: 10px;
+  background-color: #f9fafb;
+  border: 1px solid var(--border);
+  transition: border var(--transition-fast), box-shadow var(--transition-fast), background var(--transition-fast);
+}
+
+form input[type="text"]:focus,
+form input[type="email"]:focus,
+form input[type="password"]:focus {
+  background: #fdf2f8;
+}
+
+/* password eye icon wrapper is inline on HTML, just let it be */
+#eye {
+  font-size: 14px;
+}
+
+/* submit button */
+form input[type="submit"] {
+  border-radius: 999px;
+  border: none;
+  background: var(--primary);
+  color: #ffffff;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  font-size: 13px;
+  font-weight: 700;
+  margin-top: 10px;
+  transition: background var(--transition-fast), transform var(--transition-fast), box-shadow var(--transition-fast);
+}
+
+form input[type="submit"]:hover {
+  background: #be123c;
+  transform: translateY(-1px);
+  box-shadow: var(--shadow-soft);
+}
+
+form h3 {
+  text-align: left;
+  font-size: 13px;
+  margin-top: 10px;
+  color: var(--muted);
+}
+
+form h3 a {
+  color: var(--dark);
+  font-weight: 600;
+  border-bottom: 1px solid transparent;
+  transition: color var(--transition-fast), border-color var(--transition-fast);
+}
+
+form h3 a:hover {
+  color: var(--primary);
+  border-color: var(--primary);
+}
+
+/* ========== RESPONSIVE ========== */
+
+/* Tablets and down */
+@media (max-width: 900px) {
+  #container {
+    max-width: 720px;
+  }
+
+  #black {
+    padding: 24px 18px;
+  }
+
+  form {
+    width: 85%;
+  }
+}
+
+/* Mobile */
+@media (max-width: 700px) {
+  body {
+    padding: 20px 10px;
+  }
+
+  #container {
+    flex-direction: column;
+    max-width: 480px;
+    border-radius: var(--radius-lg);
+  }
+
+  #black {
+    width: 100%;
+    text-align: left;
+    padding: 24px 20px;
+  }
+
+  #white {
+    width: 100%;
+  }
+
+  form {
+    width: 88%;
+    margin-top: 20px;
+  }
+}
+
+/* Extra small */
+@media (max-width: 480px) {
+  #black h1 {
+    font-size: 20px;
+  }
+
+  #black h3 {
+    font-size: 13px;
+  }
+
+  form h2 {
+    font-size: 20px;
+  }
+}

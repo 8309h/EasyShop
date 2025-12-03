@@ -1,29 +1,39 @@
 const express = require("express");
 const {
-    registerUser,
-    loginUser,
-    updateProfile,
-    refreshAccessToken,
-    logoutUser
-} = require("../controllers/user.controller"); 
+  registerUser,
+  loginUser,
+  updateProfile,
+  refreshAccessToken,
+  logoutUser,
+  getAllUsers,
+} = require("../controllers/user.controller");
+
+const { authenticate } = require("../middlewares/auth.middleware");
+const { authorize } = require("../middlewares/authorize.middleware");
+const { validate } = require("../middlewares/validate.middleware");
+const {
+  registerSchema,
+  loginSchema,
+  updateProfileSchema,
+} = require("../validation/user.validation");
 
 const userRouter = express.Router();
 
-// Route to register a new user
-userRouter.post("/register", registerUser);
+userRouter.post("/register", validate(registerSchema), registerUser);
+userRouter.post("/login", validate(loginSchema), loginUser);
 
-// Route to login
-userRouter.post("/login", loginUser);
+userRouter.patch(
+  "/updateprofile",
+  authenticate,
+  validate(updateProfileSchema),
+  updateProfile
+);
 
-// Route to update user profile
-userRouter.patch("/updateprofile", updateProfile);
-
-// Route to refresh access token
 userRouter.post("/refresh-token", refreshAccessToken);
 
-// Route to logout
-userRouter.post("/logout", logoutUser);
+userRouter.post("/logout", authenticate, logoutUser);
 
-module.exports = {
-    userRouter
-};
+// Admin-only: get all users
+userRouter.get("/all", authenticate, authorize(["admin"]), getAllUsers);
+
+module.exports = { userRouter };

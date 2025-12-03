@@ -1,118 +1,124 @@
-const { MenProductModel, WomenProductModel } = require("../models/Post.model");
+const { ProductModel } = require("../models/Product.model");
 
-// Function to create a product
 async function createProduct(req, res) {
-  const payload = req.body;
-
   try {
-    const category = payload.Category ? payload.Category.toLowerCase() : null;
+    const { title, image, description, price, category } = req.body;
 
-    if (!category || (category !== "men's clothing" && category !== "women's clothing")) {
-      return res.status(400).json({ msg: "Invalid category" });
-    }
-
-    let product;
-
-    if (category === "men's clothing") {
-      product = new MenProductModel({
-        Title: payload.Title,
-        Image: payload.Image,
-        Description: payload.Description,
-        Price: payload.Price,
-      });
-    } else {
-      product = new WomenProductModel({
-        Title: payload.Title,
-        Image: payload.Image,
-        Description: payload.Description,
-        Price: payload.Price,
-      });
-    }
+    const product = new ProductModel({
+      title,
+      image,
+      description,
+      price,
+      category,
+    });
 
     await product.save();
 
-    res.json({ msg: "Product registered on site", product });
-  } catch (err) {
-    res.status(500).json({ msg: "Not able to add", error: err.message });
-  }
-}
-
-// Function to get all men's products
-async function getAllMenProducts(req, res) {
-  try {
-    const menProducts = await MenProductModel.find();
-    res.json(menProducts);
+    res.status(201).json({ msg: "Product created", product });
   } catch (err) {
     console.error(err);
-    res.status(500).json({ msg: "Error fetching men's products" });
+    res.status(500).json({ msg: "Not able to add product" });
   }
 }
 
-// Function to get all women's products
-async function getAllWomenProducts(req, res) {
+async function getProducts(req, res) {
   try {
-    const womenProducts = await WomenProductModel.find();
-    res.json(womenProducts);
-  } catch (err) {
-    console.error(err);
-    res.status(500).json({ msg: "Error fetching women's products" });
-  }
-}
+    const {
+      category,
+      search,
+      sort = "createdAt",
+      order = "desc",
+      page = 1,
+      limit = 12,
+    } = req.query;
 
-// Function to update a product
-async function updateProduct(req, res) {
-  const productId = req.params.id;
+    const query = { isDeleted: false };
 
-  try {
-    const category = req.body.Category ? req.body.Category.toLowerCase() : null;
-
-    let updatedProduct;
-
-    if (category === "men's clothing") {
-      updatedProduct = await MenProductModel.findByIdAndUpdate(
-        { _id: productId },
-        { $set: req.body },
-        { new: true }
-      );
-    } else if (category === "women's clothing") {
-      updatedProduct = await WomenProductModel.findByIdAndUpdate(
-        { _id: productId },
-        { $set: req.body },
-        { new: true }
-      );
-    } else {
-      return res.status(400).json({ msg: "Invalid category" });
+    if (category) {
+      query.category = category;
     }
 
-    res.json({ msg: "Product updated successfully", product: updatedProduct });
+    if (search) {
+      query.$text = { $search: search };
+    }
+
+    const sortOption = {};
+    sortOption[sort] = order === "asc" ? 1 : -1;
+
+    const pageNum = Number(page);
+    const limitNum = Number(limit);
+
+    const [products, total] = await Promise.all([
+      ProductModel.find(query)
+        .sort(sortOption)
+        .skip((pageNum - 1) * limitNum)
+        .limit(limitNum),
+      ProductModel.countDocuments(query),
+    ]);
+
+    res.json({
+      data: products,
+      total,
+      page: pageNum,
+      limit: limitNum,
+      totalPages: Math.ceil(total / limitNum),
+    });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ msg: "Error fetching products" });
+  }
+}
+
+async function getProductById(req, res) {
+  try {
+    const product = await ProductModel.findOne({
+      _id: req.params.id,
+      isDeleted: false,
+    });
+
+    if (!product) {
+      return res.status(404).json({ msg: "Product not found" });
+    }
+
+    res.json(product);
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ msg: "Error fetching product" });
+  }
+}
+
+async function updateProduct(req, res) {
+  try {
+    const updated = await ProductModel.findOneAndUpdate(
+      { _id: req.params.id, isDeleted: false },
+      { $set: req.body },
+      { new: true }
+    );
+
+    if (!updated) {
+      return res.status(404).json({ msg: "Product not found" });
+    }
+
+    res.json({ msg: "Product updated successfully", product: updated });
   } catch (err) {
     console.error(err);
     res.status(500).json({ msg: "Error updating product" });
   }
 }
 
-// Function to delete a product
 async function deleteProduct(req, res) {
-  const productId = req.params.id;
-
   try {
-    const category = req.body.Category ? req.body.Category.toLowerCase() : null;
+    const deleted = await ProductModel.findOneAndUpdate(
+      { _id: req.params.id, isDeleted: false },
+      { $set: { isDeleted: true } },
+      { new: true }
+    );
 
-    let deletedProduct;
-
-    if (category === "men's clothing") {
-      deletedProduct = await MenProductModel.findByIdAndDelete(productId);
-    } else if (category === "women's clothing") {
-      deletedProduct = await WomenProductModel.findByIdAndDelete(productId);
-    } else {
-      return res.status(400).json({ msg: "Invalid category" });
+    if (!deleted) {
+      return res.status(404).json({ msg: "Product not found" });
     }
 
-    if (deletedProduct) {
-      res.json({ msg: "Product deleted successfully", product: deletedProduct });
-    } else {
-      res.status(404).json({ msg: "Product not found" });
-    }
+    res.json({ msg: "Product deleted (soft delete)", product: deleted });
   } catch (err) {
     console.error(err);
     res.status(500).json({ msg: "Error deleting product" });
@@ -121,8 +127,8 @@ async function deleteProduct(req, res) {
 
 module.exports = {
   createProduct,
-  getAllMenProducts,
-  getAllWomenProducts,
+  getProducts,
+  getProductById,
   updateProduct,
-  deleteProduct
+  deleteProduct,
 };

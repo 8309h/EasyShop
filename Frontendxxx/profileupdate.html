@@ -1,0 +1,392 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Profile Update</title>
+    <style>
+        /* Navigation styles */
+        nav {
+            background-color: #f0f0f0;
+            padding: 10px 0;
+        }
+
+        #black {
+            text-align: center;
+            font-size: 14px;
+            color: #666;
+            padding: 5px 0;
+        }
+
+        #nav1 {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 20px;
+        }
+
+        #logo img {
+            width: 100px;
+        }
+
+        #links {
+            display: flex;
+        }
+
+        #links button {
+            margin-right: 10px;
+            background-color: transparent;
+            border: none;
+            cursor: pointer;
+            font-size: 14px;
+            color: #666;
+        }
+
+        /* Form container */
+        .container {
+            max-width: 400px;
+            margin: 50px auto;
+            padding: 20px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        /* Form styles */
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        input[type="text"],
+        input[type="email"],
+        input[type="password"] {
+            width: 100%;
+            padding: 8px;
+            border: 1px solid #ccc;
+            border-radius: 3px;
+        }
+
+        button[type="submit"] {
+            padding: 10px 20px;
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            border-radius: 3px;
+            cursor: pointer;
+        }
+
+        button[type="submit"]:hover {
+            background-color: #0056b3;
+        }
+
+        #message {
+            margin-top: 20px;
+            font-weight: bold;
+        }
+
+        /* Footer styles */
+        footer {
+            background-color: #f0f0f0;
+            padding: 20px;
+            margin-top: 50px;
+        }
+
+        #foot1 {
+            display: flex;
+            justify-content: space-between;
+        }
+
+        #foot1 div {
+            width: 25%;
+        }
+
+        #foot1 h2 {
+            font-size: 16px;
+            margin-bottom: 10px;
+        }
+
+        #foot1 p {
+            font-size: 14px;
+            margin-bottom: 5px;
+        }
+
+        #foot1 input[type="text"] {
+            width: 100%;
+            margin-bottom: 10px;
+            padding: 5px;
+            border: 1px solid #ccc;
+            border-radius: 3px;
+        }
+
+        #foot1 input[type="submit"] {
+            padding: 5px 20px;
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            border-radius: 3px;
+            cursor: pointer;
+        }
+
+        #foot1 input[type="submit"]:hover {
+            background-color: #0056b3;
+        }
+
+        #foot2 {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 20px;
+        }
+
+        #footicon img {
+            width: 50%;
+        }
+
+        #lastlink i {
+            margin-right: 5px;
+            font-size: 20px;
+            color: #666;
+            cursor: pointer;
+        }
+    </style>
+    <link rel="stylesheet" href="./style/index.css">
+</head>
+
+<body>
+    <nav>
+
+        <div id="black">Download our shop bags mobile app and your membership will extends by three month</div>
+        <div id="nav1">
+            <div id="logo">
+                <a href="./index.html"><img src="./images/logo2.png" alt=""></a>
+            </div>
+
+            <div id="links">
+                <a href="./product.html"><button>WOMEN</button></a>
+                <a href="./mensproduct.html"><button>MEN</button></a>
+                <a href="./aboutus.html"><button>ABOUT</button></a>
+                <a href="#"><button>KIDS</button></a>
+                <a href="#"><button>HOME</button></a>
+                <a href="#"><button>DESIGNERS</button></a>
+                <a href="#"><button>COMMUNITY</button></a>
+                <a href="#"><button>SALE</button></a>
+                <a href="./admin.html"><button style="color: white; background-color: black;">ADMIN</button></a>
+            </div>
+
+            <div id="links2">
+
+                <div class="dropdown">
+                    <button class="dropbtn"><i class="fa fa-user" aria-hidden="true"></i></button>
+                    <div class="dropdown-content">
+                        <a href="#" onclick="login()">Login</a>
+                        <a href="#" onclick="signUp()">Sign Up</a>
+                        <a href="#" onclick="logout()">Logout</a>
+                        <a href="#" onclick="goToProfile()">Go to Profile</a>
+                    </div>
+                </div>
+                <a href="wishlist.html"><i class="fa fa-heart" aria-hidden="true"></i> </a><span id="wishcount"></span>
+                <a href="cart.html"><i class="fa fa-shopping-cart" aria-hidden="true"></i></a><span
+                    id="cartcount"></span>
+            </div>
+        </div>
+    </nav>
+    <div class="container">
+        <h2>User Profile Update</h2>
+        <!-- Table to display user information -->
+        <table>
+            <!-- <tr>
+                <th>Field</th>
+                <th>Value</th>
+            </tr> -->
+            <tr>
+                <td>Name:</td>
+                <td id="name"></td>
+            </tr>
+            <tr>
+                <td>Email:</td>
+                <td id="email"></td>
+            </tr>
+           
+            <tr>
+                <td>Address:</td>
+                <td id="address"></td>
+            </tr>
+        </table>
+        <button id="updateBtn">Update Profile</button>
+        <div id="updateForm" style="display: none;">
+            <h3>Update Profile</h3>
+            <form id="profileForm">
+                <div class="form-group">
+                    <label for="newPassword">New Password:</label>
+                    <input type="password" id="newPassword" name="newPassword">
+                </div>
+                <div class="form-group">
+                    <label for="newName">New Name:</label>
+                    <input type="text" id="newName" name="newName">
+                </div>
+                <div class="form-group">
+                    <label for="newEmail">New Email:</label>
+                    <input type="email" id="newEmail" name="newEmail">
+                </div>
+                <div class="form-group">
+                    <label for="newAddress">New Address:</label>
+                    <input type="text" id="newAddress" name="newAddress">
+                </div>
+                <button type="submit">Save Changes</button>
+            </form>
+        </div>
+        <div id="message"></div>
+    </div>
+
+    <footer>
+        <div id="foot1">
+            <div>
+                <h2> CUSTOMER CARE</h2>
+                <p>Shopper Protection</p>
+                <p>Loyalty Program</p>
+                <p>Size Guides</p>
+                <p>Contact Us / Feedback</p>
+                <p>Help Center</p>
+                <p>Shipping / Returns</p>
+            </div>
+            <div>
+                <h2>INFORMATION</h2>
+                <p>About Us</p>
+                <p> Influencer Program</p>
+                <p> Partner Stores</p>
+                <p> Sitemap</p>
+            </div>
+            <div>
+                <h2>LEGAL</h2>
+                <p>Terms Of Use</p>
+                <p>Disclosure</p>
+                <p>Privacy Policy</p>
+                <p>Community Guidelines</p>
+            </div>
+            <div>
+                <h2>NEWSLETTER SIGN UP</h2>
+                <input type="text" placeholder="e-mail"><br>
+                <input type="checkbox" id="vehicle1" name="vehicle1" value="true">
+                <label for="vehicle1"> Men</label>
+                <input type="checkbox" id="vehicle2" name="vehicle2" value="true">
+                <label for="vehicle2"> Women</label><br>
+                <input type="submit" value="Submit" style="padding: 2% 25%;">
+
+            </div>
+        </div>
+
+        <p style="color: gray; text-align: center; margin: auto;">When you follow our links to visit a brand or
+            retailer’s wepgbsite or make a purchase, ModeSens may earn a commission.</p>
+
+        <hr>
+        <div id="foot2">
+            <div id="footicon">
+
+                <img style="width: 50%;" src="./images/logo2.png" alt="">
+
+                <p>© 2022 shopBag Inc</p>
+            </div>
+            <div id="lastlink">
+                <i class="fa fa-facebook" aria-hidden="true"></i>
+                <i class="fa fa-instagram" aria-hidden="true"></i>
+                <i class="fa fa-pinterest-p" aria-hidden="true"></i>
+                <i class="fa fa-twitter" aria-hidden="true"></i>
+                <i class="fa fa-youtube" aria-hidden="true"></i>
+                <i class="fa fa-yahoo" aria-hidden="true"></i>
+                <i class="fa fa-google" aria-hidden="true"></i>
+                <i class="fa fa-snapchat" aria-hidden="true"></i>
+
+            </div>
+        </div>
+
+
+
+
+    </footer>
+
+
+</body>
+
+</html>
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+    const messageDiv = document.getElementById('message');
+    const updateBtn = document.getElementById('updateBtn');
+    const updateForm = document.getElementById('updateForm'); // Corrected form ID
+    const newPasswordInput = document.getElementById('newPassword');
+    const newNameInput = document.getElementById('newName'); // Added input field for new name
+    const newEmailInput = document.getElementById('newEmail'); // Added input field for new email
+    const newAddressInput = document.getElementById('newAddress');
+
+    // Retrieve the user object from localStorage
+    const userJSON = localStorage.getItem('login_user');
+
+    // Check if the userJSON is not null or undefined
+    if (userJSON) {
+        // Convert the userJSON back to a JavaScript object
+        const userObject = JSON.parse(userJSON);
+
+        // Populate the table with user credentials
+        document.getElementById('name').textContent = userObject.name;
+        document.getElementById('email').textContent = userObject.email;
+        document.getElementById('address').textContent = userObject.address;
+
+        // Event listener for the update button
+        updateBtn.addEventListener('click', function () {
+            // Display the update form
+            updateForm.style.display = 'block';
+        });
+
+        // Event listener for the profile update form submission
+        updateForm.addEventListener('submit', async function (event) {
+            event.preventDefault();
+
+            const newPassword = newPasswordInput.value;
+            const newName = newNameInput.value; // Get the new name value
+            const newEmail = newEmailInput.value; // Get the new email value
+            const newAddress = newAddressInput.value;
+
+            // Hash the new password
+
+            const requestBody = {
+                userID: userObject._id,
+                name: newName ? newName : userObject.name, // Use the new name if provided, otherwise keep the original name
+                email: newEmail ? newEmail : userObject.email, // Use the new email if provided, otherwise keep the original email
+                password: newPassword ? newPassword : userObject.password, 
+                address: newAddress ? newAddress : userObject.address // Use the new address if provided, otherwise keep the original address
+            };
+
+            try {
+                const response = await fetch('http://localhost:8080/users/updateprofile', {
+                    method: 'PATCH', // Change method to PATCH for updating profile
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(requestBody)
+                });
+                const data = await response.json();
+                console.log(data)
+                messageDiv.textContent = data.msg;
+
+                // Reset the form and hide it after successful submission
+                newPasswordInput.value = '';
+                newNameInput.value = ''; // Clear the new name input field
+                newEmailInput.value = ''; // Clear the new email input field
+                newAddressInput.value = '';
+                updateForm.style.display = 'none';
+            } catch (error) {
+                console.error('Error:', error);
+                messageDiv.textContent = 'Something went wrong';
+            }
+        });
+    } else {
+        console.log('User object not found in localStorage');
+    }
+});
+
+</script>

@@ -1,0 +1,753 @@
+/* ==========================================================================
+   styles.css  — Clean Modern E-Commerce Theme (EasyShop)
+   ========================================================================== */
+
+/* -------------------------
+   VARIABLES
+   ------------------------- */
+:root{
+  --bg: #ffffff;
+  --surface: #ffffff;
+  --muted: #6b7280;
+  --text: #0f172a;
+  --accent: #ff3b30;
+  --accent-600: #ff6b5f;
+  --card-shadow: 0 8px 20px rgba(15,23,42,0.06);
+  --glass: rgba(15, 23, 42, 0.02);
+  --radius-sm: 8px;
+  --radius-md: 12px;
+  --container-width: 1200px;
+  --transition-fast: 180ms ease;
+  --max-width: 1200px;
+  --focus-ring: 0 0 0 4px rgba(255,59,48,0.08);
+  --success: #10b981;
+}
+
+/* -------------------------
+   RESET / BASE
+   ------------------------- */
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{height:100%}
+body{
+  font-family: Inter, ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+  background: linear-gradient(180deg,#f7f9fb 0%, #ffffff 100%);
+  color:var(--text);
+  -webkit-font-smoothing:antialiased;
+  -moz-osx-font-smoothing:grayscale;
+  line-height:1.45;
+  font-size:15px;
+}
+
+/* simple utility container */
+.container{
+  width: min(96%, var(--container-width));
+  margin: 0 auto;
+}
+
+/* links */
+a{color:inherit;text-decoration:none}
+button{font-family:inherit}
+
+/* small helpers */
+.flex{display:flex}
+.center{display:flex;align-items:center;justify-content:center}
+.mb-8{margin-bottom:2rem}
+.section-title{font-weight:700;margin-bottom:1rem;color:var(--text)}
+
+/* -------------------------
+   HEADER / NAV
+   ------------------------- */
+.header{
+  background: #fff;
+  border-bottom: 1px solid #eef2f6;
+  position:sticky;
+  top:0;
+  z-index:60;
+  box-shadow: var(--card-shadow);
+}
+
+.nav-container{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:16px;
+  padding:14px 0;
+}
+
+/* logo */
+.logo img{
+  width:140px;
+  height:auto;
+  display:block;
+  object-fit:contain;
+}
+
+/* desktop nav */
+.nav-links{
+  display:flex;
+  gap:18px;
+  align-items:center;
+  justify-self:center;
+  font-weight:600;
+  letter-spacing:0.02em;
+}
+
+.nav-links a{
+  padding:8px 10px;
+  color:var(--muted);
+  border-radius:8px;
+  transition: color var(--transition-fast), background var(--transition-fast), transform var(--transition-fast);
+}
+
+.nav-links a:hover{
+  color:var(--accent);
+  transform:translateY(-2px);
+}
+
+/* highlight (sale) */
+.nav-links .highlight{
+  color:#fff;
+  background: linear-gradient(90deg,var(--accent),var(--accent-600));
+  padding:8px 14px;
+  border-radius:999px;
+  box-shadow: 0 6px 18px rgba(255,59,48,0.12);
+}
+
+/* right icons */
+.nav-icons{
+  display:flex;
+  gap:14px;
+  align-items:center;
+}
+
+/* icon buttons */
+.nav-icons a, .nav-icons .icon-btn{
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  gap:8px;
+  padding:8px;
+  color:var(--muted);
+  border-radius:8px;
+  transition: background var(--transition-fast), color var(--transition-fast), transform var(--transition-fast);
+}
+
+.nav-icons a:hover, .nav-icons .icon-btn:hover{
+  transform:translateY(-2px);
+  color:var(--accent);
+}
+
+/* dropdown simple */
+.dropdown{position:relative}
+.dropdown .fa-user{font-size:18px;color:var(--muted)}
+.dropdown-menu{
+  position:absolute;
+  right:0;
+  top:110%;
+  background:#fff;
+  border-radius:10px;
+  box-shadow: 0 8px 24px rgba(12,18,28,0.06);
+  min-width:170px;
+  overflow:hidden;
+  border:1px solid #eef2f6;
+  display:none;
+}
+.dropdown-menu a{
+  display:block;
+  padding:10px 12px;
+  color:var(--text);
+  font-weight:500;
+}
+.dropdown:hover .dropdown-menu{display:block}
+
+/* hamburger (mobile) */
+#hamburger{
+  display:none;
+  font-size:20px;
+  color:var(--muted);
+  padding:8px;
+  border-radius:8px;
+  cursor:pointer;
+}
+
+/* -------------------------
+   MOBILE MENU (hidden by default)
+   ------------------------- */
+#mobileMenu{
+  display:none;
+  background:#fff;
+  border-top:1px solid #eef2f6;
+  padding:12px;
+  box-shadow: 0 6px 20px rgba(12,18,28,0.06);
+}
+#mobileMenu a{
+  display:block;
+  padding:10px;
+  border-radius:8px;
+  color:var(--text);
+}
+#mobileMenu a:hover{background:var(--glass)}
+
+/* -------------------------
+   HERO
+   ------------------------- */
+.hero-section{padding:44px 0 36px 0}
+.hero{
+  display:grid;
+  grid-template-columns: 1fr 520px;
+  gap:28px;
+  align-items:center;
+}
+
+.hero-text h1{
+  font-size:40px;
+  line-height:1.03;
+  margin-bottom:10px;
+  color:var(--text);
+}
+.hero-text p{
+  color:var(--muted);
+  margin-bottom:18px;
+}
+.btn-primary{
+  background: linear-gradient(90deg,var(--accent),var(--accent-600));
+  color:#fff;
+  padding:12px 18px;
+  border-radius:10px;
+  display:inline-block;
+  font-weight:700;
+  box-shadow: 0 12px 30px rgba(255,59,48,0.12);
+  transition: transform var(--transition-fast), box-shadow var(--transition-fast);
+}
+.btn-primary:hover{transform:translateY(-3px);box-shadow:0 18px 40px rgba(255,59,48,0.14)}
+
+/* hero image */
+.hero-img img{
+  width:100%;
+  border-radius:14px;
+  box-shadow: var(--card-shadow);
+  display:block;
+}
+
+/* -------------------------
+   CATEGORY GRID
+   ------------------------- */
+.category-section{padding:36px 0}
+.category-grid{
+  display:grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap:18px;
+}
+.category-card{
+  background:#fff;
+  border-radius:12px;
+  padding:8px;
+  text-align:center;
+  box-shadow: var(--card-shadow);
+  transition: transform var(--transition-fast), box-shadow var(--transition-fast);
+  overflow:hidden;
+}
+.category-card img{height:160px;object-fit:cover;border-radius:10px 10px 6px 6px}
+.category-card h3{margin-top:8px;color:var(--text);font-weight:700}
+
+/* hover effect */
+.category-card:hover{transform:translateY(-6px);box-shadow:0 18px 40px rgba(12,18,28,0.06)}
+
+/* -------------------------
+   APP PROMO
+   ------------------------- */
+.app-section{padding:36px 0;background:linear-gradient(180deg,#fff,#fbfcfd)}
+.app-container{
+  display:grid;
+  grid-template-columns: 1fr 420px;
+  gap:24px;
+  align-items:center;
+}
+.app-text h2{font-size:22px;margin-bottom:8px}
+.store-buttons img{height:48px;margin-right:12px;display:inline-block}
+
+/* app image styling */
+.app-img img{width:100%;border-radius:12px;box-shadow:var(--card-shadow)}
+
+/* -------------------------
+   FOOTER
+   ------------------------- */
+footer{
+  margin-top:36px;
+  padding:36px 0 18px 0;
+  background:#fff;
+  border-top:1px solid #eef2f6;
+}
+.footer-container{
+  display:grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap:20px;
+  padding-bottom:10px;
+}
+.footer-container h4{margin-bottom:8px;color:var(--text)}
+.footer-container p{color:var(--muted);margin-bottom:6px}
+.socials i{font-size:18px;margin-right:10px;color:var(--muted)}
+.socials i:hover{color:var(--accent)}
+
+/* copyright */
+footer .copyright{
+  text-align:center;
+  color:var(--muted);
+  margin-top:10px;
+  font-size:13px;
+}
+
+/* -------------------------
+   FORMS, INPUTS, SMALL UI
+   ------------------------- */
+input[type="text"], input[type="email"], input[type="password"], textarea, select {
+  width:100%;
+  padding:10px 12px;
+  border-radius:8px;
+  border:1px solid #e6eef6;
+  background:#fff;
+  color:var(--text);
+  transition: box-shadow var(--transition-fast), border-color var(--transition-fast);
+}
+input:focus, textarea:focus, select:focus{
+  outline:none;
+  box-shadow: var(--focus-ring);
+  border-color:var(--accent-600);
+}
+
+/* small badges */
+.badge{
+  background:var(--accent);
+  color:#fff;
+  padding:4px 8px;
+  border-radius:999px;
+  font-size:12px;
+}
+
+/* -------------------------
+   RESPONSIVE BREAKPOINTS
+   ------------------------- */
+
+/* medium screens (<= 1024px) */
+@media (max-width: 1024px){
+  .hero{grid-template-columns: 1fr 360px}
+  .category-grid{grid-template-columns: repeat(3, 1fr)}
+  .app-container{grid-template-columns: 1fr 320px}
+}
+
+/* tablet (<= 768px) */
+@media (max-width: 768px){
+  .nav-links{display:none}
+  #hamburger{display:block}
+  #mobileMenu{display:block} /* mobile menu visible when JS toggles a class; kept available for simple fallback */
+  .hero{grid-template-columns:1fr;gap:18px}
+  .hero-text h1{font-size:30px}
+  .category-grid{grid-template-columns: repeat(2, 1fr)}
+  .app-container{grid-template-columns:1fr}
+  .footer-container{grid-template-columns: repeat(2, 1fr)}
+  .logo img{width:120px}
+}
+
+/* small phones (<= 480px) */
+@media (max-width: 480px){
+  :root{--container-width: 100%}
+  .container{width:94%}
+  .hero-text h1{font-size:22px}
+  .nav-icons{gap:8px}
+  .category-grid{grid-template-columns: 1fr;gap:12px}
+  .app-text h2{font-size:18px}
+  .footer-container{grid-template-columns:1fr}
+  .logo img{width:100px}
+}
+
+/* tiny tweaks for accessibility */
+@media (prefers-reduced-motion: reduce){
+  *{transition:none!important; animation:none!important}
+}
+/* ==========================================================================
+   styles.css  — Clean Modern E-Commerce Theme (EasyShop)
+   Includes full responsive styling (no need for responsive.css)
+   ========================================================================== */
+
+/* -------------------------
+   COLOR SYSTEM & VARIABLES
+   ------------------------- */
+:root{
+  --bg: #ffffff;
+  --surface: #ffffff;
+  --muted: #6b7280;
+  --text: #0c1320;
+  --accent: #ff3b30;
+  --accent-light: #ff6b5f;
+  --shadow: 0 8px 20px rgba(0,0,0,0.05);
+  --radius-sm: 8px;
+  --radius-md: 12px;
+  --max-width: 1200px;
+  --transition: 180ms ease;
+}
+
+/* -------------------------
+   RESET
+   ------------------------- */
+*{margin:0;padding:0;box-sizing:border-box}
+body{
+  font-family: "Inter", Arial, sans-serif;
+  background: #f7f9fb;
+  color: var(--text);
+  line-height: 1.45;
+  font-size: 15px;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* utility */
+.container{
+  width: min(95%, var(--max-width));
+  margin:auto;
+}
+
+a{text-decoration:none;color:inherit;cursor:pointer}
+button{cursor:pointer;font-family:inherit}
+
+/* -------------------------
+   HEADER
+   ------------------------- */
+.header{
+  background:#fff;
+  border-bottom:1px solid #edf1f5;
+  position:sticky;
+  top:0;
+  z-index:50;
+  box-shadow:var(--shadow);
+}
+.nav-container{
+  padding:14px 0;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+}
+.logo img{
+  width:140px;
+  height:auto;
+  display:block;
+}
+
+/* desktop nav */
+.nav-links{
+  display:flex;
+  gap:20px;
+  font-weight:600;
+}
+.nav-links a{
+  padding:6px 0;
+  color:var(--muted);
+  transition:var(--transition);
+}
+.nav-links a:hover{color:var(--accent)}
+.nav-links .highlight{
+  background:linear-gradient(90deg,var(--accent),var(--accent-light));
+  color:white;
+  padding:8px 16px;
+  border-radius:999px;
+}
+
+/* right icons */
+.nav-icons{
+  display:flex;
+  gap:14px;
+}
+.nav-icons i{
+  font-size:18px;
+  padding:8px;
+  border-radius:8px;
+  color:var(--muted);
+  transition:var(--transition);
+}
+.nav-icons i:hover{
+  color:var(--accent);
+  background:#f4f4f4;
+}
+
+/* dropdown */
+.dropdown{position:relative}
+.dropdown-menu{
+  display:none;
+  position:absolute;
+  right:0;top:110%;
+  background:white;
+  border-radius:8px;
+  min-width:160px;
+  box-shadow:var(--shadow);
+  border:1px solid #edf1f5;
+}
+.dropdown-menu a{
+  display:block;
+  padding:10px 12px;
+  color:var(--text);
+  font-weight:500;
+}
+.dropdown:hover .dropdown-menu{display:block}
+
+/* mobile hamburger */
+#hamburger{display:none;font-size:22px;color:var(--text)}
+
+/* mobile menu */
+#mobileMenu{
+  display:none;
+  background:#fff;
+  border-top:1px solid #ddd;
+  box-shadow:var(--shadow);
+}
+#mobileMenu a{
+  display:block;
+  padding:14px 18px;
+  border-bottom:1px solid #f1f1f1;
+}
+#mobileMenu a:hover{background:#f7f7f7}
+
+/* -------------------------
+   HERO SECTION
+   ------------------------- */
+.hero-section{padding:50px 0}
+.hero{
+  display:grid;
+  grid-template-columns:1fr 450px;
+  gap:30px;
+  align-items:center;
+}
+.hero-text h1{
+  font-size:40px;
+  font-weight:800;
+  margin-bottom:10px;
+}
+.hero-text p{
+  margin-bottom:18px;
+  color:var(--muted);
+}
+.btn-primary{
+  background:linear-gradient(90deg,var(--accent),var(--accent-light));
+  padding:12px 22px;
+  border-radius:10px;
+  color:white;
+  font-weight:700;
+  display:inline-block;
+  box-shadow: 0 8px 18px rgba(255,59,48,0.12);
+  transition:var(--transition);
+}
+.btn-primary:hover{
+  transform:translateY(-3px);
+  box-shadow: 0 16px 32px rgba(255,59,48,0.16);
+}
+.hero-img img{
+  width:100%;
+  border-radius:14px;
+  box-shadow:var(--shadow);
+}
+
+/* -------------------------
+   CATEGORY GRID
+   ------------------------- */
+.category-section{
+  padding:40px 0;
+}
+.section-title{
+  font-size:24px;
+  font-weight:700;
+  margin-bottom:18px;
+  text-align:center;
+}
+.category-grid{
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:20px;
+}
+.category-card{
+  background:white;
+  padding:10px;
+  border-radius:12px;
+  box-shadow:var(--shadow);
+  transition:var(--transition);
+}
+.category-card img{
+  height:170px;
+  width:100%;
+  border-radius:10px;
+  object-fit:cover;
+}
+.category-card h3{
+  margin-top:10px;
+  font-weight:700;
+  text-align:center;
+}
+.category-card:hover{transform:translateY(-6px);}
+
+/* -------------------------
+   APP SECTION
+   ------------------------- */
+.app-section{
+  padding:40px 0;
+  background:#fff;
+}
+.app-container{
+  display:grid;
+  grid-template-columns:1fr 400px;
+  align-items:center;
+  gap:30px;
+}
+.store-buttons img{
+  height:48px;
+  margin-right:12px;
+}
+.app-img img{
+  width:100%;
+  border-radius:12px;
+  box-shadow:var(--shadow);
+}
+
+/* -------------------------
+   FOOTER
+   ------------------------- */
+footer{
+  background:#fff;
+  padding:40px 0 20px;
+  margin-top:30px;
+  border-top:1px solid #edf1f5;
+}
+.footer-container{
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:20px;
+}
+.footer-container h4{
+  margin-bottom:10px;
+  font-size:16px;
+}
+.footer-container p{
+  margin-bottom:6px;
+  color:var(--muted);
+}
+.socials i{
+  margin-right:12px;
+  font-size:20px;
+}
+.socials i:hover{color:var(--accent)}
+
+footer .copyright{
+  text-align:center;
+  margin-top:18px;
+  color:var(--muted);
+  font-size:13px;
+}
+
+/* ================================================================
+   RESPONSIVE STYLES — FULLY ENHANCED FOR MOBILE
+   ================================================================ */
+
+/* -------------------------
+   <= 1024px (Laptop)
+   ------------------------- */
+@media (max-width:1024px){
+  .hero{
+    grid-template-columns:1fr 350px;
+  }
+  .app-container{
+    grid-template-columns:1fr 300px;
+  }
+  .category-grid{
+    grid-template-columns:repeat(3,1fr);
+  }
+}
+
+/* -------------------------
+   <= 768px (Tablet)
+   ------------------------- */
+@media (max-width:768px){
+
+  /* hide desktop nav */
+  .nav-links{display:none}
+  #hamburger{display:block}
+
+  /* hero */
+  .hero{
+    grid-template-columns:1fr;
+    text-align:center;
+  }
+  .hero-text h1{font-size:32px}
+  .hero-img{margin-top:10px}
+
+  /* categories: 2 per row */
+  .category-grid{
+    grid-template-columns:repeat(2,1fr);
+  }
+
+  /* app section single column */
+  .app-container{
+    grid-template-columns:1fr;
+    text-align:center;
+  }
+
+  /* footer columns → 2 */
+  .footer-container{
+    grid-template-columns:repeat(2,1fr);
+  }
+}
+
+/* -------------------------
+   <= 480px (Mobile)
+   ------------------------- */
+@media (max-width:480px){
+
+  body{font-size:14px}
+
+  /* logo smaller */
+  .logo img{width:110px}
+
+  /* hero text */
+  .hero-text h1{
+    font-size:26px;
+    line-height:1.15;
+  }
+
+  .hero{
+    padding-top:10px;
+    gap:20px;
+  }
+
+  /* categories: 1 per row */
+  .category-grid{
+    grid-template-columns:1fr;
+  }
+  .category-card img{height:150px}
+
+  /* app section */
+  .store-buttons img{
+    height:42px;
+    margin-bottom:10px;
+  }
+
+  /* footer: 1 column */
+  .footer-container{
+    grid-template-columns:1fr;
+  }
+
+  /* mobile-friendly dropdown click */
+  .dropdown:hover .dropdown-menu{
+    display:none;
+  }
+  .dropdown-menu{
+    position:relative;
+    top:0;
+    box-shadow:none;
+    border:none;
+    padding-top:5px;
+  }
+}
+
+/* -------------------------
+   <= 360px (Small Phones)
+   ------------------------- */
+@media (max-width:360px){
+  .hero-text h1{font-size:23px}
+  .btn-primary{padding:10px 18px}
+  .category-card img{height:130px}
+  .store-buttons img{height:36px}
+}

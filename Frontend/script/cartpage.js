@@ -1,128 +1,187 @@
-
-let displaycartcount = document.getElementById("cartcount");
-let cartitem = JSON.parse(localStorage.getItem("shopcartdata")) || [];
-
+let cart = JSON.parse(localStorage.getItem("shopcartdata")) || [];
 let OfferApplied = false;
 
+// DOM References
+const cartContainer = document.getElementById("cart-container");
+const subtotalEl = document.getElementById("summary-subtotal");
+const discountEl = document.getElementById("summary-discount");
+const taxEl = document.getElementById("summary-tax");
+const totalEl = document.getElementById("cart-total");
+const couponForm = document.getElementById("coupon-form");
+const couponInput = document.getElementById("cupon-filled");
+const buyNowButton = document.getElementById("buyNowButton");
+const cartCount = document.getElementById("cartcount");
 
-displaycard(cartitem);
-// console.log(cartitem)
+initCart();
 
-function displaycard(out) {
-
-    let total = 0;
-    document.querySelector("#cart-container").innerHTML = "";
-    let count = 1
-    let totalprice = document.querySelector("#cart-total");
-    displaycartcount.innerText = out.length;
-
-
-    out.forEach(function (el, i) {
-
-        let div = document.createElement("div")
-
-        let div1 = document.createElement("div")
-
-        let image = document.createElement("img")
-        image.setAttribute("src", el.Image)
-
-        let div2 = document.createElement("div")
-
-        let title = document.createElement("h3")
-        title.textContent = el.Title;
-
-        let desc = document.createElement("p")
-        desc.textContent = el.Description
-
-        let category = document.createElement("p")
-        category.textContent = el.Catogory
-
-        let price = document.createElement("p")
-        price.textContent = "₹ " + el.Price
-
-        let btn1 = document.createElement("button");
-        btn1.textContent = "+";
-        btn1.addEventListener("click", function () {
-            count++;
-            qtn.textContent = count;
-            total = total + Number(el.Price)
-            totalprice.textContent = total;
-
-        })
-
-        let qtn = document.createElement("span");
-        qtn.textContent = el.quantity;
-
-        let btn2 = document.createElement("button");
-        btn2.textContent = "-";
-
-        btn2.addEventListener("click", function () {
-            if (count <= 1) {
-                
-                let cartdata = JSON.parse(localStorage.getItem("shopcartdata")) || [];
-                cartdata.splice(i, 1);
-                localStorage.setItem("shopcartdata", JSON.stringify(cartdata));
-                displaycard(cartdata);
-            } else {
-                count--;
-                qtn.textContent = count;
-                total = total - Number(el.Price)
-                totalprice.textContent = total;
-            }
-
-        })
-
-
-        let btn3 = document.createElement("button");
-        btn3.textContent = "Remove";
-        btn3.addEventListener("click", function () {
-
-            let cartdata = JSON.parse(localStorage.getItem("shopcartdata")) || [];
-            cartdata.splice(i, 1);
-            localStorage.setItem("shopcartdata", JSON.stringify(cartdata));
-            displaycard(cartdata);
-        })
-        total = total + Number(el.Price);
-        totalprice.textContent = total;
-        div1.append(image)
-        div2.append(title, desc, category, price, btn1, qtn, btn2, btn3)
-        div.append(div1, div2)
-        document.querySelector("#cart-container").append(div);
-
-    })
-
-
-    let dis = document.querySelector("#finalprice>form");
-    dis.addEventListener("submit", function (event) {
-
-        event.preventDefault();
-        let val = document.querySelector("#cupon-filled").value;
-        // console.log(val)
-        if (val === "HM-dec") {
-            totalprice.textContent = Math.floor(total - (total * 0.1));
-            OfferApplied = true;
-            alert("Offer Applied Successfully")
-            // console.log(totalprice)
-            localStorage.setItem("disprice", totalprice.textContent)
-            dis.reset()
-        }
-        else {
-            alert("You Enter The Wrong Coupen Code")
-        }
-    })
-
-
-    let gotopayment = document.querySelector("#buyNowButton");
-    gotopayment.addEventListener("click", (event) => {
-        event.preventDefault();
-        console.log("Buy button clicked")
-
-        if (OfferApplied) {
-            window.location.href = "payment.html"
-        } else {
-            alert("Please apply the offer before preceding to the payment")
-        }
-    })
+// ======================================================
+// LOAD CART
+// ======================================================
+function initCart() {
+    renderCartItems(cart);
+    updateSummary();
 }
 
+// ======================================================
+// RENDER CART ITEMS
+// ======================================================
+function renderCartItems(items) {
+    cartContainer.innerHTML = "";
 
+    if (items.length === 0) {
+        cartContainer.innerHTML = `
+            <div class="empty-cart">
+                <h3>Your cart is empty</h3>
+                <p>Add some products to continue</p>
+            </div>`;
+        return;
+    }
+
+    cartCount.textContent = items.length;
+
+    items.forEach((item, index) => {
+        const div = document.createElement("div");
+        div.className = "cart-item";
+
+        div.innerHTML = `
+            <img src="${item.image || item.Image}" alt="${item.title}" />
+
+            <div class="cart-info">
+                <h3>${item.title || item.Title}</h3>
+                <p>${item.description || item.Description}</p>
+                <p class="cart-price">₹${item.price || item.Price}</p>
+
+                <div class="qty-box">
+                    <button class="qty-btn" data-action="inc">+</button>
+                    <span class="qty-value">${item.quantity || 1}</span>
+                    <button class="qty-btn" data-action="dec">-</button>
+                </div>
+
+                <button class="remove-btn">Remove</button>
+            </div>
+        `;
+
+        // Quantity +/-
+        const qtyBtns = div.querySelectorAll(".qty-btn");
+        qtyBtns[0].addEventListener("click", () => updateQty(index, "inc"));
+        qtyBtns[1].addEventListener("click", () => updateQty(index, "dec"));
+
+        // Remove
+        div.querySelector(".remove-btn").addEventListener("click", () => {
+            removeItem(index);
+        });
+
+        cartContainer.appendChild(div);
+    });
+}
+
+// ======================================================
+// UPDATE QUANTITY
+// ======================================================
+function updateQty(index, type) {
+    if (type === "inc") {
+        cart[index].quantity++;
+    } else if (type === "dec" && cart[index].quantity > 1) {
+        cart[index].quantity--;
+    }
+
+    saveCart();
+    initCart();
+}
+
+// ======================================================
+// REMOVE ITEM
+// ======================================================
+function removeItem(index) {
+    cart.splice(index, 1);
+    saveCart();
+    initCart();
+
+    Swal.fire({
+        icon: "success",
+        title: "Item removed",
+        timer: 1200,
+        showConfirmButton: false,
+    });
+}
+
+// ======================================================
+// UPDATE SUMMARY (Subtotal → Discount → Tax → Total)
+// ======================================================
+function updateSummary() {
+    let subtotal = cart.reduce(
+        (sum, item) => sum + (item.price || item.Price) * (item.quantity || 1),
+        0
+    );
+
+    let discount = OfferApplied ? subtotal * 0.10 : 0;
+    let taxable = subtotal - discount;
+    let tax = taxable * 0.05;
+    let total = taxable + tax;
+
+    subtotalEl.textContent = `₹${subtotal.toFixed(2)}`;
+    discountEl.textContent = `₹${discount.toFixed(2)}`;
+    taxEl.textContent = `₹${tax.toFixed(2)}`;
+    totalEl.textContent = total.toFixed(2);
+}
+
+// ======================================================
+// APPLY COUPON
+// ======================================================
+couponForm.addEventListener("submit", (e) => {
+    e.preventDefault();
+    const code = couponInput.value.trim();
+
+    if (code === "HM-dec") {
+        OfferApplied = true;
+        updateSummary();
+
+        Swal.fire({
+            icon: "success",
+            title: "Coupon Applied",
+            text: "You received 10% OFF!",
+            timer: 1500,
+            showConfirmButton: false
+        });
+    } else {
+        Swal.fire({
+            icon: "error",
+            title: "Invalid Coupon",
+            timer: 1500,
+            showConfirmButton: false
+        });
+    }
+});
+
+// ======================================================
+// PROCEED TO PAYMENT
+// ======================================================
+buyNowButton.addEventListener("click", () => {
+    if (cart.length === 0) {
+        Swal.fire({
+            icon: "warning",
+            title: "Your cart is empty",
+            timer: 1500,
+            showConfirmButton: false
+        });
+        return;
+    }
+
+    Swal.fire({
+        icon: "success",
+        title: "Proceeding to Payment",
+        timer: 1500,
+        showConfirmButton: false
+    });
+
+    setTimeout(() => {
+        window.location.href = "payment.html";
+    }, 1500);
+});
+
+// ======================================================
+// SAVE CART
+// ======================================================
+function saveCart() {
+    localStorage.setItem("shopcartdata", JSON.stringify(cart));
+}

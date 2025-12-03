@@ -1,1 +1,30 @@
-harshal
+easyshop-backend/
+  package.json
+  .env           # you create this
+  server.js
+  /config
+    db.js
+  /models
+    User.model.js
+    Product.model.js
+    Cart.model.js
+    Order.model.js
+    BlacklistToken.model.js
+  /middlewares
+    auth.middleware.js
+    authorize.middleware.js
+    error.middleware.js
+    validate.middleware.js
+  /validation
+    user.validation.js
+    product.validation.js
+  /controllers
+    user.controller.js
+    product.controller.js
+    cart.controller.js
+    order.controller.js
+  /routes
+    user.routes.js
+    product.routes.js
+    cart.routes.js
+    order.routes.js

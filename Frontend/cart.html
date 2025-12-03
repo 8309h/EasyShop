@@ -2,144 +2,142 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Cart | EasyShop</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>cart page</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
-    <link rel="stylesheet" href="style/index.css">
-    <link rel="stylesheet" href="style//cartpage.css">
+    <!-- Icons -->
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"/>
+
+    <!-- Cart Styles -->
+    <link rel="stylesheet" href="./style/cartpage.css">
+
+    <!-- Global Styles -->
+    <link rel="stylesheet" href="./style/style.css"/>
+
+    <!-- SweetAlert2 -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </head>
+
 <body>
-    <nav>
 
-        <div id="black">Download our shop bags mobile app and your membership will extends by three month</div>
-        <div id="nav1">
-            <div id="logo">
-              <a href="./index.html"><img src="./images/logo2.png" alt=""></a>
-            </div>
-            <div id="links">
-              <a href="./product.html"><button>WOMEN</button></a>
-              <a href="./product.html"><button>MEN</button></a>
-              <a href="./product.html"><button>BEAUTY</button></a>
-              <a href="./product.html"><button>KIDS</button></a>
-              <a href="./product.html"><button>HOME</button></a>
-              <a href="./product.html"><button>DESIGNERS</button></a>
-              <a href="./product.html"><button>COMMUNITY</button></a>
-              <a href="./product.html"><button>SALE</button></a>
+<!-- ================= NAVBAR ================= -->
+<header class="navbar">
+    <div class="nav-top-strip">Download our EasyShop app & extend your membership by 3 months!</div>
 
-          </div> 
-            
-          <div id="links2">
+    <div class="nav-main">
+        <div class="logo">
+            <a href="index.html">
+                <img src="./images/logo2.png" alt="EasyShop">
+            </a>
+        </div>
 
-            <div class="dropdown">
-                <button class="dropbtn"><i class="fa fa-user" aria-hidden="true"></i></button>
-                <div class="dropdown-content">
-                    <a href="#" onclick="login()">Login</a>
-                    <a href="#" onclick="signUp()">Sign Up</a>
-                    <a href="#" onclick="logout()">Logout</a>
-                    <a href="#" onclick="goToProfile()">Go to Profile</a>
-                </div>
-            </div>
-            <a href="wishlist.html"><i class="fa fa-heart" aria-hidden="true"></i> </a><span id="wishcount"></span>
-            <a href="cart.html"><i class="fa fa-shopping-cart" aria-hidden="true"></i></a><span
-                id="cartcount"></span>
-        </div>
-             
-        </div>
-    </nav>  
-    <div id="flex">
-        <div id="total">
-          <h1>Total Payabale Amount:- <span id="cart-total">0</span></h1>
-          <div id="finalprice">
-            <form >
-              <input  type="text" id="cupon-filled" placeholder="Enter coupen code here" />
-              <br>
-      
-              <input type="submit">
-            </form>
-          </div>
-         
-    
-          <a href="#"><button id="buyNowButton">Buy Now</button></a>
-          <div id="offer">
-            <!-- <p>Use the coupen code Harsh30 and get the discount upto 30% off </p> -->
-            <p>USE(HM-dec) => 10% off</p>
-            <!-- <p>USE(HM-decor) => 50% off</p> -->
-            <p id="smile" style="font-size: 60px;">🛒</p>
-          </div>
-        </div>
-        <div id="cart-container">
-          <!-- Here Append All the cart Products  -->
-        </div>
-      </div>
-      
-    <footer>
-        <div id="foot1">
-            <div>
-                <h2> CUSTOMER CARE</h2>
-                <p>Shopper Protection</p>
-                <p>Loyalty Program</p>
-                <p>Size Guides</p>
-                <p>Contact Us / Feedback</p>
-                <p>Help Center</p>
-                <p>Shipping / Returns</p>
-            </div>
-            <div>
-                <h2>INFORMATION</h2>
-                <p>About Us</p>
-                <p> Influencer Program</p>
-                <p> Partner Stores</p>
-                <p> Sitemap</p>
-            </div>
-            <div>
-                <h2>LEGAL</h2>
-                <p>Terms Of Use</p>
-                <p>Disclosure</p>
-                <p>Privacy Policy</p>
-                <p>Community Guidelines</p>
-            </div>
-            <div>
-                <h2>NEWSLETTER SIGN UP</h2>
-                <input type="text" placeholder="e-mail"><br>
-                <input type="checkbox" id="vehicle1" name="vehicle1" value="true">
-                <label for="vehicle1"> Men</label>
-                <input type="checkbox" id="vehicle2" name="vehicle2" value="true">
-                <label for="vehicle2"> Women</label><br>
-                <input type="submit" value="Submit" style="padding: 2% 25%;">
+        <nav class="nav-center">
+            <a href="product.html">All</a>
+            <a href="product.html?category=men">Men</a>
+            <a href="product.html?category=women">Women</a>
+            <a href="aboutus.html">About</a>
+        </nav>
 
-            </div>
+        <div class="nav-right">
+            <a href="wishlist.html"><i class="fa fa-heart"></i></a><span id="wishcount" class="badge"></span>
+            <a href="cart.html"><i class="fa fa-shopping-cart"></i></a><span id="cartcount" class="badge"></span>
+            <a href="login.html"><i class="fa fa-user"></i></a>
         </div>
-        
-        <p style="color: gray; text-align: center; margin: auto;">When you follow our links to visit a brand or
-            retailer’s website or make a purchase, ModeSens may earn a commission.</p>
+    </div>
+</header>
+
+<!-- ================= CART TITLE ================= -->
+<h1 class="cart-title">Your Shopping Cart</h1>
+
+<!-- ================= MAIN CART LAYOUT ================= -->
+<div class="container cart-layout">
+
+    <!-- LEFT SIDE — CART ITEMS -->
+    <section class="cart-items" id="cart-container"></section>
+
+    <!-- RIGHT SIDE — SUMMARY -->
+    <aside class="cart-summary">
+
+        <h2>Order Summary</h2>
+
+        <div class="summary-line">
+            <span>Subtotal</span>
+            <span id="summary-subtotal">₹0</span>
+        </div>
+
+        <div class="summary-line">
+            <span>Discount</span>
+            <span id="summary-discount">₹0</span>
+        </div>
+
+        <div class="summary-line">
+            <span>Tax (5%)</span>
+            <span id="summary-tax">₹0</span>
+        </div>
 
         <hr>
-        <div id="foot2">
-            <div id="footicon">
-             
-                    <img  style="width: 50%;" src="./images/logo2.png" alt="">
-               
-                <p>© 2022 shopBag Inc</p>
-            </div>
-            <div id="lastlink">
-                <i class="fa fa-facebook" aria-hidden="true"></i>
-                <i class="fa fa-instagram" aria-hidden="true"></i>
-                <i class="fa fa-pinterest-p" aria-hidden="true"></i>
-                <i class="fa fa-twitter" aria-hidden="true"></i>
-                <i class="fa fa-youtube" aria-hidden="true"></i>
-                <i class="fa fa-yahoo" aria-hidden="true"></i>
-                <i class="fa fa-google" aria-hidden="true"></i>
-                <i class="fa fa-snapchat" aria-hidden="true"></i>
-                
-            </div>
+
+        <div class="summary-line total">
+            <strong>Total</strong>
+            <strong>₹<span id="cart-total">0</span></strong>
         </div>
-       
-       
 
+        <!-- COUPON -->
+        <form id="coupon-form" class="coupon-box">
+            <input type="text" id="cupon-filled" placeholder="Enter coupon code">
+            <button type="submit">Apply</button>
+        </form>
 
-    </footer>
-    
+        <button id="buyNowButton" class="buy-now-btn">Proceed to Payment</button>
+
+        <p class="coupon-info">
+            Use coupon <b>HM-dec</b> for <b>10% OFF</b>.
+        </p>
+
+    </aside>
+</div>
+
+<!-- ================= FOOTER ================= -->
+<footer class="footer">
+    <div class="footer-container">
+        <div class="footer-column">
+            <h4>Customer Care</h4>
+            <p>Returns</p>
+            <p>Support</p>
+        </div>
+
+        <div class="footer-column">
+            <h4>Information</h4>
+            <p>About Us</p>
+            <p>News</p>
+        </div>
+
+        <div class="footer-column">
+            <h4>Legal</h4>
+            <p>Terms</p>
+            <p>Privacy</p>
+        </div>
+
+        <div class="footer-column">
+            <h4>Newsletter</h4>
+            <input type="text" placeholder="Email">
+            <button>Subscribe</button>
+        </div>
+    </div>
+
+    <div class="footer-bottom">
+        <p>© 2025 EasyShop — Your Shopping Assistant</p>
+        <div class="footer-icons">
+            <i class="fa fa-facebook"></i>
+            <i class="fa fa-instagram"></i>
+            <i class="fa fa-twitter"></i>
+        </div>
+    </div>
+</footer>
+
+<!-- CART LOGIC -->
+<script src="./script/cartpage.js"></script>
+
 </body>
 </html>
-<script src="./script/cartpage.js"></script>

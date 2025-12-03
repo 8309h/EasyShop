@@ -1,65 +1,64 @@
-document.getElementById("hide").addEventListener("click", function () {
-    let cont = document.getElementById("container");
-    cont.style.display = "none";
-});
+import { BASE_URL } from "./config.js";
 
-let form = document.getElementById('signupForm');
-form.addEventListener('submit', myfun);
+// ----------------------
+// Signup Form Handler
+// ----------------------
+document.getElementById("signupForm").addEventListener("submit", handleSignup);
 
-function myfun(event) {
-    event.preventDefault();
+async function handleSignup(e) {
+    e.preventDefault();
 
-    const name = document.getElementById("name").value;
-    const email = document.getElementById("email").value;
-    const password = document.getElementById("password").value;
-    const address = document.getElementById("address").value;
+    const name = document.getElementById("name").value.trim();
+    const email = document.getElementById("email").value.trim();
+    const password = document.getElementById("password").value.trim();
+    const address = document.getElementById("address").value.trim();
 
-    if (name === "" || email === "" || password === "" || address === "") {
-        alert("All fields are required");
-    } else {
-        let payload = { name, email, password, address };
-        let deployed = "http://localhost:8080/users/register";
+    if (!name || !email || !password || !address) {
+        return Swal.fire("Missing Fields", "All fields are required", "warning");
+    }
 
-       
+    const payload = { name, email, password, address };
 
-        fetch(deployed, {
+    try {
+        const res = await fetch(`${BASE_URL}/api/users/register`, {
             method: "POST",
-            headers: {
-                "Content-type": "application/json"
-            },
+            headers: { "Content-Type": "application/json" },
             body: JSON.stringify(payload)
-        })
-        .then(res => res.json())
-        .then(data => {
-            console.log("data", data.msg);
-
-            if (data.msg === "User already exists. Please login") {
-                alert(data.msg);
-                location.href = "login.html";
-            } else if (data.msg === "New user registered successfully") {
-                alert("SignUp Success");
-                location.href = "login.html";
-                // After successful signup
-                // localStorage.setItem('hasSignedUp', true);
-                // Close the modal
-                document.getElementById('signupModal').style.display = 'none';
-            }
-        })
-        .catch(err => {
-            console.log(err);
         });
+
+        const data = await res.json();
+        console.log("Signup Response:", data);
+
+        if (data.msg === "User already exists. Please login") {
+            await Swal.fire("Already Exists", data.msg, "info");
+            window.location.href = "login.html";
+        }
+        else if (data.msg === "New user registered successfully") {
+            await Swal.fire("Success", "Signup Successful!", "success");
+            window.location.href = "login.html";
+        }
+        else {
+            Swal.fire("Error", data.msg || "Something went wrong", "error");
+        }
+
+    } catch (error) {
+        console.log(error);
+        Swal.fire("Error", "Server error. Try again.", "error");
     }
 }
 
-function togglePasswordVisibility() {
-    const passwordField = document.getElementById("password");
-    const eyeIcon = document.getElementById("eye");
+// ----------------------
+// Toggle Password Visibility
+// ----------------------
+window.togglePasswordVisibility = function () {
+    const pass = document.getElementById("password");
+    const eye = document.getElementById("eye");
 
-    if (passwordField.type === "password") {
-        passwordField.type = "text";
-        eyeIcon.textContent = "👁️";
+    if (pass.type === "password") {
+        pass.type = "text";
+        eye.textContent = "👁️";
     } else {
-        passwordField.type = "password";
-        eyeIcon.textContent = "🔒";
+        pass.type = "password";
+        eye.textContent = "🔒";
     }
-}
+};

@@ -1,147 +1,200 @@
+// products.js — fixed URL building (uses URL & URLSearchParams) + live search debounce
+import { BASE_URL } from "./config.js";
+
 let cart = JSON.parse(localStorage.getItem("shopcartdata")) || [];
-let wishListData = JSON.parse(localStorage.getItem("shopwishlist")) || [];
+let wishlist = JSON.parse(localStorage.getItem("shopwishlist")) || [];
 
-let displaycartcount = document.getElementById("cartcount");
-let displaywishcount = document.getElementById("wishcount");
+let currentPage = 1;
+let limit = 12;
+let activeCategory = "";
+let activeSearch = "";
+let activeSort = "";
 
-let productArr = [];
-
-//let localhostUrl = "http://localhost:8080/products/allwomenproducts";
-let deployedurl = "https://easy-shop-backend-ckq6.onrender.com/products/allwomenproducts"
-
-
-async function getdata() {
-    try {
-        let res = await fetch(deployedurl);
-        let data = await res.json();
-        console.log("datafrom server",data)
-        if (data && Array.isArray(data)) {
-            productArr = data;
-            displayData(productArr);
-        } else {
-            console.error("Invalid data format received from the server.");
-        }
-    } catch (err) {
-        console.error("Error fetching data:", err);
-    }
+// debounce helper
+function debounce(fn, delay = 300) {
+  let t;
+  return (...args) => {
+    clearTimeout(t);
+    t = setTimeout(() => fn(...args), delay);
+  };
 }
 
-getdata();
+async function loadProducts(page = 1) {
+  currentPage = page;
 
-function displayData(data) {
-    let container = document.querySelector("#container");
-    container.innerHTML = "";
-    
-    data.forEach(el => {
-        
-        let div = document.createElement("div")
-         
-        let div1 = document.createElement("div")
+  try {
+    const url = new URL("/api/products", BASE_URL);
+    const params = url.searchParams;
+    params.set("page", currentPage);
+    params.set("limit", limit);
 
-        let image = document.createElement("img")
-        image.setAttribute("src", el.Image)
+    if (activeCategory) params.set("category", activeCategory);
+    else params.delete("category");
 
-        let div2 = document.createElement("div")
+    if (activeSearch) params.set("search", activeSearch);
+    else params.delete("search");
 
-        let title = document.createElement("h3")
-        title.textContent = el.Title;
-
-        let desc = document.createElement("p");
-        desc.textContent = el.Description;
-
-        let category = document.createElement("p");
-        category.textContent = el.Catogory;
-
-        let price = document.createElement("p");
-        price.textContent = "₹ " + el.Price;
-
-        let buynow = createButton("CART TO CART", () => addToCart(el));
-
-        let wishlist = createButton("WISHLIST", () => addToWishlist(el));
-
-        div1.append(image)
-        div2.append(title,desc,category,price,buynow,wishlist)
-        div.append(div1,div2)
-        container.appendChild(div);
-    });
-}
-
-function createButton(text, onClickHandler) {
-    let button = document.createElement("button");
-    button.textContent = text;
-    button.addEventListener("click", onClickHandler);
-    return button;
-}
-
-function addToCart(product) {
-    if (!isProductInCart(product)) {
-        cart.push({ ...product, quantity:  1});
-        localStorage.setItem("shopcartdata", JSON.stringify(cart));
-        alert("Product Added To Cart ✔");
-        // location.href = "cart.html";
+    if (activeSort === "LTH") {
+      params.set("sort", "price");
+      params.set("order", "asc");
+    } else if (activeSort === "HTL") {
+      params.set("sort", "price");
+      params.set("order", "desc");
+    } else if (activeSort === "A-Z") {
+      params.set("sort", "title");
+      params.set("order", "asc");
+    } else if (activeSort === "Z-A") {
+      params.set("sort", "title");
+      params.set("order", "desc");
     } else {
-        alert("Product Already in Cart ❌");
-        
+      params.delete("sort");
+      params.delete("order");
     }
-}
 
-function addToWishlist(product) {
-    if (!isProductInWishlist(product)) {
-        wishListData.push({ ...product, quantity: 1 });
-        localStorage.setItem("shopwishlist", JSON.stringify(wishListData));
-        alert("Product Added To Wishlist ✔");
-        location.href = "wishlist.html";
-    } else {
-        alert("Product Already in Wishlist ❌");
+    console.log("FETCH URL →", url.toString());
+
+    const res = await fetch(url.toString());
+    const result = await res.json();
+
+    if (!result || !Array.isArray(result.data)) {
+      console.error("Invalid response format", result);
+      displayProducts([]);
+      renderPagination(0, 1);
+      return;
     }
+
+    displayProducts(result.data);
+    renderPagination(result.totalPages || 1, result.page || 1);
+  } catch (err) {
+    console.error("Fetch error:", err);
+    displayProducts([]);
+    renderPagination(0, 1);
+  }
 }
 
-function isProductInCart(product) {
-    return cart.some(item => item._id === product._id);
+// initial load
+loadProducts();
+
+/* --- UI rendering functions --- */
+function displayProducts(list) {
+  const container = document.getElementById("products-container");
+  if (!container) return;
+  container.innerHTML = "";
+
+  if (!list.length) {
+    container.innerHTML = "<h2>No products found</h2>";
+    return;
+  }
+
+  list.forEach(item => {
+    const card = document.createElement("div");
+    card.className = "product-card";
+
+    let img = item.image;
+    if (!img || !img.startsWith("http")) img = "./images/noimage.png";
+
+    card.innerHTML = `
+      <img src="${img}" alt="${escapeHtml(item.title || "product")}">
+      <h3>${escapeHtml(item.title || "")}</h3>
+      <p class="desc">${escapeHtml((item.description || "").slice(0, 80))}...</p>
+      <p class="price">₹ ${item.price ?? "-"}</p>
+      <div class="actions">
+        <button class="btn-cart">Add to Cart</button>
+        <button class="btn-wish">Wishlist</button>
+      </div>
+    `;
+
+    card.querySelector(".btn-cart").addEventListener("click", () => addToCart(item));
+    card.querySelector(".btn-wish").addEventListener("click", () => addToWishlist(item));
+    container.appendChild(card);
+  });
 }
 
-function isProductInWishlist(product) {
-    return wishListData.some(item => item._id === product._id);
+function renderPagination(totalPages, current) {
+  const pagination = document.getElementById("pagination");
+  if (!pagination) return;
+  pagination.innerHTML = "";
+  totalPages = Number(totalPages) || 0;
+  current = Number(current) || 1;
+  if (totalPages <= 1) return;
+
+  if (current > 1) pagination.appendChild(createPageButton("Prev", current - 1));
+  for (let i = 1; i <= totalPages; i++) {
+    const btn = createPageButton(i, i);
+    if (i === current) btn.classList.add("active");
+    pagination.appendChild(btn);
+  }
+  if (current < totalPages) pagination.appendChild(createPageButton("Next", current + 1));
+}
+function createPageButton(text, page) {
+  const btn = document.createElement("button");
+  btn.textContent = text;
+  btn.className = "page-btn";
+  btn.addEventListener("click", () => loadProducts(page));
+  return btn;
 }
 
-function search() {
-    let query = document.querySelector("input").value.trim().toLowerCase();
-    console.log(query)
-    let newData = productArr.filter(el => el.Title.toLowerCase().includes(query));
-    displayData(newData);
+/* --- event bindings --- */
+document.querySelectorAll(".filter-btn").forEach(b => {
+  b.addEventListener("click", () => {
+    activeCategory = b.dataset.category || "";
+    loadProducts(1);
+  });
+});
+
+const debouncedSearch = debounce((value) => {
+  activeSearch = value.trim();
+  loadProducts(1);
+}, 300);
+
+const searchInput = document.getElementById("searchInput");
+if (searchInput) {
+  searchInput.addEventListener("input", (e) => debouncedSearch(e.target.value));
 }
 
+const sortSelect = document.getElementById("sortSelect");
+if (sortSelect) {
+  sortSelect.addEventListener("change", (e) => {
+    activeSort = e.target.value || "";
+    loadProducts(1);
+  });
+}
 
+/* --- cart / wishlist --- */
+function toast(text, icon = "success") {
+  if (window.Swal) {
+    Swal.fire({ toast: true, position: "top-end", icon, title: text, timer: 1200, showConfirmButton: false });
+  } else {
+    alert(text);
+  }
+}
 
-let sort = document.querySelector("#sort");
+function addToCart(item) {
+  if (!cart.some(p => p._id === item._id)) {
+    cart.push({ ...item, quantity: 1 });
+    localStorage.setItem("shopcartdata", JSON.stringify(cart));
+    toast("Added to cart", "success");
+  } else {
+    toast("Already in cart", "info");
+  }
+}
 
-sort.addEventListener("change", function (event) {
-    event.preventDefault();
-    console.log("sort clicked")
-    let sortSelect = event.target.value;
+function addToWishlist(item) {
+  if (!wishlist.some(p => p._id === item._id)) {
+    wishlist.push(item);
+    localStorage.setItem("shopwishlist", JSON.stringify(wishlist));
+    toast("Added to wishlist", "success");
+  } else {
+    toast("Already in wishlist", "info");
+  }
+}
 
-    console.log("heloo from sorts",sortSelect)
-
-    if(sortSelect == ""){
-        alert("Please select the order")
-    }else {
-
-        if (sortSelect === "LTH") {
-            // Sort products from Lower to Higher Price
-            productArr.sort((a,b) => a.Price - b.Price);
-            // displayData(sorteddata1)
-        } else if (sortSelect === "HTL") {
-            // Sort products from Higher to Lower Price
-            productArr.sort((a,b) => b.Price - a.Price);
-            // displayData(sort2)
-        }
-            displayData(productArr);
-        
-        }
-    });
-
-displayData(productArr)
-
-
-
-
+/* --- small helpers --- */
+function escapeHtml(unsafe) {
+  return String(unsafe)
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;")
+    .replace(/'/g, "&#039;");
+}

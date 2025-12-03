@@ -6,16 +6,21 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login Page</title>
+
     <link rel="stylesheet" href="style/login.css">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </head>
 
 <body>
+
     <nav>
         <div id="black2">Download our shop bags mobile app and your membership will extend by three months</div>
+
         <div id="nav1">
             <div id="logoapp">
                 <a href="./index.html"><img src="./images/logo2.png" alt=""></a>
             </div>
+
             <div id="links">
                 <a href="./product.html"><button>WOMEN</button></a>
                 <a href="./product.html"><button>MEN</button></a>
@@ -28,7 +33,9 @@
             </div>
         </div>
     </nav>
+
     <div id="container">
+
         <div id="black">
             <div id="logo">
                 <img src="./images/logo2.png" alt="">
@@ -41,99 +48,113 @@
             <h3>🛒MANAGE YOUR SHOPPING LIST</h3>
             <h3>🤑EARN POINTS</h3>
         </div>
+
         <div id="white">
-            <button id="hide" style="text-align: end; font-size:25px;">X</button>
+            <button id="hide" style="text-align:end; font-size:25px;" onclick="window.location.href='index.html'">✖</button>
+
             <form id="loginForm">
                 <h1>Log in to your account</h1><br>
+
                 <label for="email">E-mail</label><br>
                 <input id="email" type="email" placeholder="Enter your email" required><br>
+
                 <label for="password">Password</label><br>
                 <div style="position: relative;">
-                    <input type="password" id="password" name="password" minlength="4" placeholder="Enter password"
-                        required>
+                    <input type="password" id="password" minlength="4" placeholder="Enter password" required>
                     <span id="eye"
-                        style="position: absolute; top: 50%; right: 10px; transform: translateY(-50%); cursor: pointer;"
+                        style="position:absolute; top:50%; right:10px; transform:translateY(-50%); cursor:pointer;"
                         onclick="togglePasswordVisibility()">👁️</span>
                 </div>
+
                 <input type="submit" value="Submit">
-                <h3>Do not have an account? <a style="text-decoration:none; color: black;"
-                        href="signup.html">Sign-up</a></h3>
+
+                <h3>Do not have an account?
+                    <a style="text-decoration:none; color:black;" href="signup.html">Sign-up</a>
+                </h3>
             </form>
         </div>
     </div>
-</body>
 
-</html>
-<script>
+    <!-- LOGIN JS CODE -->
+    <script>
+        const BASE_URL = "http://localhost:8080";
 
-    document.getElementById("hide").addEventListener("click", function () {
-        let cont = document.getElementById("container");
-        cont.style.display = "none";
-    });
+        // Form submit listener
+        document.getElementById("loginForm").addEventListener("submit", async function (event) {
+            event.preventDefault();
 
-    let form = document.getElementById('loginForm');
-    form.addEventListener('submit', myfun);
+            const email = document.getElementById("email").value.trim();
+            const password = document.getElementById("password").value.trim();
 
-    function myfun(event) {
-        event.preventDefault();
+            if (!email || !password) {
+                return Swal.fire({
+                    icon: "warning",
+                    title: "All Fields Required",
+                    showConfirmButton: false,
+                    timer: 1500
+                });
+            }
 
-        let email = document.getElementById("email").value
-        let password = document.getElementById("password").value
+            try {
+                const response = await fetch(`${BASE_URL}/api/users/login`, {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({ email, password })
+                });
 
-        if (email === "" || password === "") {
-            alert("All fields are required");
-            return true;
-        }
+                const data = await response.json();
+                console.log("Login Response →", data);
 
-        const payload = { email, password }
-        console.log("payload", payload)
+                if (data.msg === "Login successful") {
 
-        //  let deployed = "https://easy-shop-backend-ckq6.onrender.com/users/login";
-        let deployed = "http://localhost:8080/users/login";
+                    localStorage.setItem("token", data.token);
+                    localStorage.setItem("refreshToken", data.refreshToken);
+                    localStorage.setItem("login_user", JSON.stringify(data.user));
 
-        fetch(deployed, {
-            method: "POST",
-            headers: {
-                "Content-type": "application/json",
-            },
-            body: JSON.stringify(payload),
-        })
-            .then((res) => res.json())
-            .then((res) => {
+                    Swal.fire({
+                        icon: "success",
+                        title: "Login Successful",
+                        showConfirmButton: false,
+                        timer: 1500
+                    });
 
-                console.log("userback", res.user)
-
-                if (res.msg == "Login successful") {
-                    localStorage.setItem("token", res.token);
-                    localStorage.setItem('hasSignedUp', true);
-                    const userObject = res.user;
-
-                    const userJSON = JSON.stringify(userObject);
-
-                    localStorage.setItem('login_user', userJSON);
-                    alert("Login Successful")
-                    location.href = "index.html";
-
-                } else {
-                    alert(res.msg)
+                    return setTimeout(() => {
+                        window.location.href = "index.html";
+                    }, 1500);
                 }
 
-            })
-            .catch((err) => {
-                console.log(err);
-            });
-    }
+                Swal.fire({
+                    icon: "error",
+                    title: data.msg || "Invalid Credentials",
+                    showConfirmButton: false,
+                    timer: 2000
+                });
 
-    function togglePasswordVisibility() {
-        const passwordField = document.getElementById("password");
-        const eyeIcon = document.getElementById("eye");
+            } catch (error) {
+                console.error("Login error →", error);
+                Swal.fire({
+                    icon: "error",
+                    title: "Server Error",
+                    showConfirmButton: false,
+                    timer: 1500
+                });
+            }
+        });
 
-        if (passwordField.type === "password") {
-            passwordField.type = "text";
-            eyeIcon.textContent = "👁️";
-        } else {
-            passwordField.type = "password";
-            eyeIcon.textContent = "🔒";
+        // Toggle password
+        function togglePasswordVisibility() {
+            const pass = document.getElementById("password");
+            const eye = document.getElementById("eye");
+
+            if (pass.type === "password") {
+                pass.type = "text";
+                eye.textContent = "👁️";
+            } else {
+                pass.type = "password";
+                eye.textContent = "🔒";
+            }
         }
-    }
-</script>
+    </script>
+
+</body>
+</html>

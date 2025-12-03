@@ -1,0 +1,243 @@
+<!-- <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Payment</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+    <link rel="stylesheet" href="style/payment.css">
+</head>
+<body>
+    <nav>
+
+        <div id="black">Download our shop bags mobile app and your membership will extends by three month</div>
+        <div id="nav1">
+            <div id="logo">
+                <a href="./index.html">  <img src="./images/logo2.png" alt=""></a>
+              
+
+            </div>
+            <div id="links">
+                <a href="./product.html"><button>WOMEN</button></a>
+                <a href="./product.html"><button>MEN</button></a>
+                <a href="./product.html"><button>BEAUTY</button></a>
+                <a href="./product.html"><button>KIDS</button></a>
+                <a href="./product.html"><button>HOME</button></a>
+                <a href="./product.html"><button>DESIGNERS</button></a>
+                <a href="./product.html"><button>COMMUNITY</button></a>
+                <a href="./product.html"><button>SALE</button></a>
+            </div> 
+            
+            <div id="links2">
+             
+                <a href="#"><i class="fa fa-map-marker" aria-hidden="true"></i></a>
+                <a href="wishlist.html"><i class="fa fa-heart" aria-hidden="true"></i> </a><span id="wishcount"></span>
+                <a href="cart.html"><i class="fa fa-shopping-cart" aria-hidden="true"></i></a><span id="cartcount"></span>
+                <a href="login.html"><i class="fa fa-user" aria-hidden="true"></i> </a>
+
+
+            </div>
+        </div>
+    </nav>  
+    <form id="paymentForm">
+        Name of Person: <input type="text" id="name" placeholder="Name" required />
+        Card Number: <input type="text" id="cardNo" placeholder="Card Number" maxlength="16" required />
+        CVV Number: <input type="text" id="cardCvv" placeholder="CVV Number" maxlength="3" required />
+        <input type="submit" value="Confirm" />
+    </form>
+    
+    
+</body>
+</html>
+<script src="./script/payment.js"></script>
+ -->
+
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Payment</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="style/payment.css">
+    <link rel="stylesheet" href="./style/index.css">
+    <style>
+        /* General Styles */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+
+        /* nav {
+            background-color: #f1f1f1;
+            padding: 10px 0;
+        }
+
+        #black {
+            background-color: black;
+            color: white;
+            text-align: center;
+            padding: 10px;
+        }
+
+        #nav1 {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 20px;
+        }
+
+        #logo img {
+            height: 50px;
+        }
+
+        #links button {
+            background-color: transparent;
+            border: none;
+            cursor: pointer;
+            margin: 0 10px;
+            padding: 5px 10px;
+        }
+
+        #links2 a {
+            margin: 0 5px;
+        } */
+
+        .payment-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-top: 20px;
+        }
+
+        .image-section {
+            flex: 1;
+            padding: 20px;
+        }
+
+        .image-section img {
+            width: 100%;
+            height: auto;
+        }
+
+        .form-section {
+            flex: 1;
+            padding: 20px;
+        }
+
+        #paymentForm {
+            background-color: #f9f9f9;
+            padding: 20px;
+            border-radius: 10px;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        input[type="text"] {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            box-sizing: border-box;
+            font-size: 16px;
+            margin-top: 5px;
+            text-align: start;
+        }
+
+        .submit-btn {
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            margin-top: 10px;
+        }
+
+        .submit-btn:hover {
+            background-color: #45a049;
+        }
+    </style>
+</head>
+
+<body>
+    <nav>
+
+        <div id="black">Download our shop bags mobile app and your membership will extends by three month</div>
+        <div id="nav1">
+            <div id="logo">
+                <a href="./index.html"><img src="./images/logo2.png" alt=""></a>
+            </div>
+            
+            <div id="links">
+                <a href="./product.html"><button>WOMEN</button></a>
+                <a href="./mensproduct.html"><button>MEN</button></a>
+                <a href="./aboutus.html"><button>ABOUT</button></a>
+                <a href="#"><button>KIDS</button></a>
+                <a href="#"><button>HOME</button></a>
+                <a href="#"><button>DESIGNERS</button></a>
+                <a href="#"><button>COMMUNITY</button></a>
+                <a href="#"><button>SALE</button></a>
+                <a href="./admin.html"><button style="color: white; background-color: black;">ADMIN</button></a>
+            </div>
+
+            <div id="links2">
+
+                <div class="dropdown">
+                    <button class="dropbtn"><i class="fa fa-user" aria-hidden="true"></i></button>
+                    <div class="dropdown-content">
+                        <a href="#" onclick="login()">Login</a>
+                        <a href="#" onclick="signUp()">Sign Up</a>
+                        <a href="#" onclick="logout()">Logout</a>
+                        <a href="#" onclick="goToProfile()">Go to Profile</a>
+                    </div>
+                </div>
+                <a href="wishlist.html"><i class="fa fa-heart" aria-hidden="true"></i> </a><span id="wishcount"></span>
+                <a href="cart.html"><i class="fa fa-shopping-cart" aria-hidden="true"></i></a><span
+                    id="cartcount"></span>
+            </div>
+        </div>
+    </nav>
+
+    <div class="payment-container">
+        <div class="image-section">
+            <img src="./images/Payment-Gatewaysjpg.jpg" alt="Static Image">
+        </div>
+        <div class="form-section">
+            <form id="paymentForm">
+                <h2>Payment Details</h2>
+                <div class="form-group">
+                    <label for="name">Name of Person:</label>
+                    <input type="text" id="name" placeholder="Name" required />
+                </div>
+                <div class="form-group">
+                    <label for="cardNo">Card Number:</label>
+                    <input type="text" id="cardNo" placeholder="Card Number" maxlength="16" required />
+                </div>
+                <div class="form-group">
+                    <label for="cardCvv">CVV Number:</label>
+                    <input type="text" id="cardCvv" placeholder="CVV Number" maxlength="3" required />
+                </div>
+                <input type="submit" value="Confirm" class="submit-btn" />
+            </form>
+        </div>
+    </div>
+
+</body>
+
+</html>
+<script src="./script/payment.js"></script>

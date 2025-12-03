@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>OTP</title>
+  <link rel="stylesheet" href="./style/otp.css">
+  <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+  <style>
+
+#recipte2 {
+  background-color: #fff;
+  border-radius: 8px;
+  padding: 20px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  margin-top: 20px;
+}
+
+#recipte2 table {
+  width: 100%;
+}
+
+#recipte2 table img {
+  max-width: 100px;
+}
+
+#recipte2 table td {
+  padding: 10px 0;
+}
+
+#recipte2 table td:first-child {
+  width: 150px;
+}
+
+#recipte2 hr {
+  border: none;
+  border-top: 1px solid #ccc;
+}
+
+#recipte2 p {
+  margin-top: 20px;
+}
+
+#recipte2 .shop-more-btn {
+  display: inline-block;
+  background-color: #007bff;
+  color: #fff;
+  padding: 10px 20px;
+  border-radius: 4px;
+  text-decoration: none;
+  margin-top: 20px;
+}
+#paymentimg {
+  /* text-align: center; */
+  align-self: center;
+  margin-left: 10%;
+ 
+}
+
+#recipte2 .shop-more-btn:hover {
+  background-color: #0056b3;
+}
+
+#recipte2 table td:first-child {
+  width: 150px;
+}
+
+#recipte2 table tr:nth-child(odd) {
+  background-color: #f2f2f2;
+}
+
+#recipte2 table tr:last-child td {
+  font-weight: bold;
+}
+
+#recipte2 table tr:last-child td:first-child {
+  padding-top: 20px;
+}
+
+#recipte2 table tr:last-child td:first-child::after {
+  content: ":";
+}
+
+#recipte2 table tr:last-child td:last-child {
+  text-transform: capitalize;
+}
+
+
+  </style>
+</head>
+
+<body class="custom-background">
+  <div id="otpDiv">
+
+
+    <form id="inputDiv">
+      <h3>Verify the OTP</h3>
+      <input type="text" id="otp1" maxlength="1" class="otp-input" />
+      <input type="text" id="otp2" maxlength="1" class="otp-input" />
+      <input type="text" id="otp3" maxlength="1" class="otp-input" />
+      <input type="text" id="otp4" maxlength="1" class="otp-input" /> <br>
+     
+         <button type="button" onclick="validateOTP()">Submit OTP</button>
+        <button id="resendotp">Resend OTP</button>
+     
+  </form>
+  </div>
+
+  <!-- <div id="recipte2">
+
+    <p>Congratulations your Payment of Rs:-<span id="disprice"></span> Recrived
+      Successful</p>
+    <p>Your product has been dispatch soon</p>
+    <img
+      src="https://media.istockphoto.com/id/919118254/vector/check-mark-logo-vector-or-icon.jpg?s=612x612&w=0&k=20&c=K2y_bMzP74NfPtxo8xcG2Vi3eT4GwF1aUAeIUPEio3E="
+      alt="">
+    <h2>Thank You for Shopping</h2>
+    <a href="./index.html"><button>shop more</button></a>
+  </div> -->
+
+  <div id="recipte2" class="container recipte2">
+    <table>
+      <tr>
+        <td colspan="2">
+          <img src="./images/logo2.png" alt="EasyShop Logo">
+        </td>
+      </tr>
+      <tr>
+        <td>Customer Name:</td>
+        <td id="customerName">John Doe</td>
+      </tr>
+      <tr>
+        <td>Total Price:</td>
+        <td>Rs: <span id="disprice"></span></td>
+      </tr>
+      <tr>
+        <td colspan="2">
+          <hr>
+        </td>
+      </tr>
+      <tr>
+        <td>Status</td>
+        <td>Payment Successful</td>
+      </tr>
+    </table>
+    <p>Thank You for Shopping with us! Visit Again!</p>
+    <img id="paymentimg" src="https://media.istockphoto.com/id/919118254/vector/check-mark-logo-vector-or-icon.jpg?s=612x612&w=0&k=20&c=K2y_bMzP74NfPtxo8xcG2Vi3eT4GwF1aUAeIUPEio3E=" alt="">
+    <a href="./index.html" class="shop-more-btn">Shop More</a>
+  </div>
+  
+</body>
+
+
+
+
+</html>
+
+
+
+<script src="./script/otp.js"></script>
